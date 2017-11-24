@@ -1,0 +1,27 @@
+{% extends 'banner.html.twig' %}
+{% block content %}
+    <div id="page-content-div">
+        <h2>{{ page_heading_2 }}</h2>
+        <p>{{ page_text }}</p>
+        <form action="{{ action }}" method="{{ method }}">
+            <fieldset>
+                <legend>Country details</legend>
+                <br>
+                <p>Select a country:</p>
+                <select id="country" name="country" required>
+                    {% for name in country_names %}
+                        <option>{{ name }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <p>Select the required detail:</p>
+                <label for="code"><input id="code" type="radio" name="detail" value="code">Country Code</label>
+                <label for="currency"><input id="currency" type="radio" name="detail" value="currency">Currency</label>
+                <label for="curcode"><input id="curcode" type="radio" name="detail" value="curcode">Currency Code</label>
+                <label for="gmt"><input id="gmt" type="radio" name="detail" value="gmt">GMT</label>
+                <br><br>
+                <input type="submit" value="Retrieve the details >>>">
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

@@ -10,5 +10,5 @@
 	*
 	*/
 
-require 'routes/homepage.php';
-require 'routes/process_sms_message.php';
+require 'routes/loginpage.php';
+require 'routes/commandpage.php';

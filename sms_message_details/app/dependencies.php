@@ -20,18 +20,61 @@ $container['view'] = function ($container) {
   return $view;
 };
 
-$container['validator'] = function ($container) {
-  $class_path = $container->get('settings')['class_path'];
-  require $class_path . 'Validator.php';
-  $validator = new Validator();
-  return $validator;
+
+$container['mysql_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'MySqlModel.php';
+    $model = new MySqlQueries();
+    return $model;
 };
 
-$container['countrydetails_model'] = function ($container) {
-  $class_path = $container->get('settings')['class_path'];
-  require $class_path . 'CountryDetailsModel.php';
-  $model = new CountryDetailsModel();
-  return $model;
+$container['mysql_queries'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'MySqlQueries.php';
+    $model = new MySqlQueries();
+    return $model;
+};
+
+$container['mysql_wrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'MySqlWrapper.php';
+    $model = new MySqlQueries();
+    return $model;
+};
+
+$container['profile_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'ProfileModel.php';
+    $model = new ProfileModel();
+    return $model;
+};
+
+$container['soap_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'SoapModel.php';
+    $model = new SoapModel();
+    return $model;
+};
+
+$container['session_model'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'SessionModel.php';
+    $model = new SessionModel();
+    return $model;
+};
+
+$container['session_wrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'SessionWrapper.php';
+    $session_wrapper = new SessionWrapper();
+    return $session_wrapper;
+};
+
+$container['sanitised_validator'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'SanitisedValidator.php';
+    $validator = new SanitisedValidator();
+    return $validator;
 };
 
 $container['xml_parser'] = function ($container) {

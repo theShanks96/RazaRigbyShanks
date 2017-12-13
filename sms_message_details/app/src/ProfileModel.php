@@ -14,6 +14,7 @@ class ProfileModel
     private $c_password;
     private $c_fname;
     private $c_lname;
+    private $c_validated;
     private $c_obj_xml_parser;
 
     public function __construct(){}
@@ -26,6 +27,9 @@ class ProfileModel
         $this->c_password = $p_password;
         $this->c_fname = $p_fname;
         $this->c_lname = $p_lname;
+        $this->c_validated = session_id();
+        //  Todo: a better method of validation, session_id is overlong
+
     }
 
     public function set_xml_parser($p_obj_xml_parser)
@@ -46,33 +50,14 @@ class ProfileModel
         else if($p_detail == 'lname'){
             return $this->c_lname;
         }
+        else if($p_detail == 'validated'){
+            return $this->c_validated;
+        }
     }
-
-    public function get_username(){
-        return $this->c_username;
-    }
-
-    public function get_password(){
-        return $this->c_password;
-    }
-
-    public function get_fname(){
-        return $this->c_fname;
-    }
-
-    public function get_lname(){
-        return $this->c_lname;
-    }
-
-
 
     public function get_result()
     {
         return true;
     }
 
-    private function select_detail()
-    {
-
-    }
 }

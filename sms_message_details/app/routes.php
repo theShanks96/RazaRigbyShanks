@@ -10,5 +10,11 @@
 	*
 	*/
 
-require 'routes/loginpage.php';
-require 'routes/commandpage.php';
+require 'routes/login_page.php';
+require 'routes/commands_mainpage.php';
+require 'routes/commands_change.php';
+require 'routes/commands_display.php';
+require 'routes/commands_download.php';
+require 'routes/commands_filter.php';
+require 'routes/commands_saved.php';
+require 'routes/commands_send.php';

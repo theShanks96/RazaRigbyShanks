@@ -119,25 +119,25 @@ class __TwigTemplate_5d58a0570a4cbd1454c3ab54b3766cdd132355d539198e99dc545b4dfd6
         echo twig_escape_filter($this->env, ($context["action_saved"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["post_method"] ?? null), "html", null, true);
-        echo "\"><button type=\"submit\" class=\"mini-button button-block\">Save Messages</button></form></td>
+        echo "\"><button type=\"submit\" class=\"mini-button green-colour button-block\">Save Messages</button></form></td>
                             <td><form action=\"";
         // line 87
         echo twig_escape_filter($this->env, ($context["action_last"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["post_method"] ?? null), "html", null, true);
-        echo "\"><button type=\"submit\" class=\"mini-button button-block\">Last Page</button></form></td>
+        echo "\"><button type=\"submit\" class=\"mini-button green-colour button-block\">Last Page</button></form></td>
                             <td><form action=\"";
         // line 88
         echo twig_escape_filter($this->env, ($context["action_next"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["post_method"] ?? null), "html", null, true);
-        echo "\"><button type=\"submit\" class=\"mini-button button-block\">Next Page</button></form></td>
+        echo "\"><button type=\"submit\" class=\"mini-button green-colour button-block\">Next Page</button></form></td>
                             <td><form action=\"";
         // line 89
         echo twig_escape_filter($this->env, ($context["action_back"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
-        echo "\"><button type=\"submit\" class=\"mini-button button-block\">Go Back</button></form></td>
+        echo "\"><button type=\"submit\" class=\"mini-button blue-colour button-block\">Go Back</button></form></td>
                         </tr>
                     </table>
 
@@ -157,7 +157,6 @@ class __TwigTemplate_5d58a0570a4cbd1454c3ab54b3766cdd132355d539198e99dc545b4dfd6
 
 
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script  src=\"js/index.js\"></script>
 ";
     }
 

@@ -83,3 +83,24 @@ $container['xml_parser'] = function ($container) {
   $model = new XmlParser();
   return $model;
 };
+
+$container['base64_wrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'Base64Wrapper.php';
+    $model = new Base64Wrapper();
+    return $model;
+};
+
+$container['bcrypt_wrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'BcryptWrapper.php';
+    $model = new BcryptWrapper();
+    return $model;
+};
+
+$container['openssl_wrapper'] = function ($container) {
+    $class_path = $container->get('settings')['class_path'];
+    require $class_path . 'OpenSSLWrapper.php';
+    $wrapper = new OpenSSLWrapper();
+    return $wrapper;
+};

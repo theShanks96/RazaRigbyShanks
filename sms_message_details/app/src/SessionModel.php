@@ -20,91 +20,214 @@ class SessionModel
   private $c_password;
   private $c_fname;
   private $c_lname;
+  private $c_validated;
+  private $c_sid;
+
+  private $c_username_label;
+  private $c_password_label;
+  private $c_fname_label;
+  private $c_lname_label;
+  private $c_validated_label;
 
   private $c_obj_wrapper_session_file;
   private $c_obj_profile_model;
+  private $c_obj_bcrypt_wrapper;
+  private $c_obj_base64_wrapper;
 
-  public function __construct()
-  {
-    $this->c_username = null;
-    $this->c_password = null;
-    $this->c_fname = null;
-    $this->c_lname = null;
-    $this->c_obj_wrapper_session_file = null;
-    $this->c_obj_profile_model = null;
+  private $c_obj_openssl_wrapper;
+
+  public function __construct()  {
+      /** @var  c_username actual username information */
+      $this->c_username = null;
+      /** @var  c_password actual password information */
+      $this->c_password = null;
+      /** @var  c_fname actual first name information */
+      $this->c_fname = null;
+      /** @var  c_lname actual last name information */
+      $this->c_lname = null;
+      /** @var  c_validated actual validated information*/
+      $this->c_validated = null;
+      /** @var  c_sid actual session id information */
+      $this->c_sid = null;
+
+      /** @var  c_obj_wrapper_session_file session wrapper */
+      $this->c_obj_wrapper_session_file = null;
+      /** @var  c_obj_profile_model profile model used for information */
+      $this->c_obj_profile_model = null;
+      /** @var  c_obj_bcrypt_wrapper hash wrapper using the bcrypt algorithm */
+      $this->c_obj_bcrypt_wrapper = null;
+      /** @var  c_obj_base64_wrapper encoder wrapper*/
+      $this->c_obj_base64_wrapper = null;
+      /** @var  c_obj_openssl_wrapper encryption wrapper */
+      $this->c_obj_openssl_wrapper = null;
+
+  }
+
+  public function generate_labels(){
+      /** @var  c_username_label The label for 'username' in the session file, it is encrypted as an obfuscation tactic */
+      $this->c_username_label = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt('username', $this->c_sid));
+      /** @var  c_password_label The label for 'password in the session file */
+      $this->c_password_label = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt('password', $this->c_sid));
+      /** @var  c_fname_label The label for 'fname' in the session file */
+      $this->c_fname_label = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt('fname', $this->c_sid));
+      /** @var  c_lname_label The label for 'lname' in the session file */
+      $this->c_lname_label = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt('lname', $this->c_sid));
+      /** @var  c_validated_label The label for 'validated' in the session file */
+      $this->c_validated_label = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt('validated', $this->c_sid));
   }
 
   public function __destruct() { }
 
   public function set_session_profile($p_profile){
-      $this->c_username = $p_profile->get_password();
-      $this->c_password = $p_profile->get_username();
-      $this->c_fname = $p_profile->get_fname();
-      $this->c_lname = $p_profile->get_lname();
+      $this->c_username = $p_profile->perform_detail_retrieval('username');
+      $this->c_password = $p_profile->perform_detail_retrieval('password');
+      $this->c_fname = $p_profile->perform_detail_retrieval('fname');
+      $this->c_lname = $p_profile->perform_detail_retrieval('lname');
+      $this->c_validated = $p_profile->perform_detail_retrieval('validated');
+
+      /** This merely sets the session model's information by retrieving it from the profile model */
+  }
+
+  public function set_sid($p_sid){
+      /** @var  c_sid This is used throughout for validation purposes */
+      $this->c_sid = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($p_sid, $p_sid));;
   }
 
   public function set_wrapper_session_file($p_obj_wrapper_session){
     $this->c_obj_wrapper_session_file = $p_obj_wrapper_session;
   }
 
+  public function set_bcrypt_wrapper($p_bcrypt_wrapper){
+      $this->c_obj_bcrypt_wrapper = $p_bcrypt_wrapper;
+  }
+
+  public function set_base64_wrapper($p_base64_wrapper){
+      $this->c_obj_base64_wrapper = $p_base64_wrapper;
+  }
+
+  public function set_openssl_wrapper($p_openssl_wrapper){
+      $this->c_obj_openssl_wrapper = $p_openssl_wrapper;
+  }
+
+
   public function store_data(){
         $this->store_data_in_session_file();
+  }
 
+  public function store_secure_data(){
+      //    Todo: hashed and encrypted password is overlong, no encryption?
+      $this->c_username = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_username, $this->c_sid));
+      $this->c_password = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_obj_bcrypt_wrapper->create_hashed_password($this->c_password), $this->c_sid));
+      $this->c_fname = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_fname, $this->c_sid));
+      $this->c_lname = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_lname, $this->c_sid));
+      $this->c_validated = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_validated, $this->c_sid));
+
+      $this->store_data_in_session_file();
+
+      /** This first encrypts, then encodes most information
+       * Except for the password, which is first hashed, then encrypted, then encoded
+       */
   }
 
   public function retrieve_data(){
         $this->retrieve_data_in_session_file();
   }
 
-  public function get_username(){
-      return $this->c_username;
+  public function retrieve_secure_data(){
+      $this->retrieve_data_in_session_file();
+
+      $this->c_username = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_username), $this->c_sid);
+      $this->c_password = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_password), $this->c_sid);
+      $this->c_fname = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_fname), $this->c_sid);
+      $this->c_lname = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_lname), $this->c_sid);
+      $this->c_validated = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_validated), $this->c_sid);
+
+      /** This decodes and decrypts the session file information */
   }
 
-  public function get_password(){
-      return $this->c_password;
+  public function clear_data(){
+      $this->clear_data_in_session_file();
   }
 
-  public function get_fname(){
-      return $this->c_fname;
+  public function clear_secure_data(){
+
   }
 
-  public function get_lname(){
-      return $this->c_lname;
+  public function perform_detail_retrieval($p_detail){
+      /** This acts as a multi-getter, where necessary information can be extracted from this object */
+      if($p_detail == 'username'){
+          return $this->c_username;
+      }
+      else if($p_detail == 'password'){
+          return $this->c_password;
+      }
+      else if($p_detail == 'fname'){
+          return $this->c_fname;
+      }
+      else if($p_detail == 'lname'){
+          return $this->c_lname;
+      }
+      else if($p_detail == 'validated'){
+          return $this->c_validated;
+      }
   }
 
   private function retrieve_data_in_session_file(){
       $m_retrieve_result = false;
-      $m_retrieve_result_username = $this->c_obj_wrapper_session_file->get_session('user_name');
-      $m_retrieve_result_password = $this->c_obj_wrapper_session_file->get_session('password');
-      $m_retrieve_result_fname = $this->c_obj_wrapper_session_file->get_session('fname');
-      $m_retrieve_result_lname = $this->c_obj_wrapper_session_file->get_session('lname');
+      $m_retrieve_result_username = $this->c_obj_wrapper_session_file->get_session($this->c_username_label);
+      $m_retrieve_result_password = $this->c_obj_wrapper_session_file->get_session($this->c_password_label);
+      $m_retrieve_result_fname = $this->c_obj_wrapper_session_file->get_session($this->c_fname_label);
+      $m_retrieve_result_lname = $this->c_obj_wrapper_session_file->get_session($this->c_lname_label);
+      $m_retrieve_result_validated = $this->c_obj_wrapper_session_file->get_session($this->c_validated_label);
 
       if ($m_retrieve_result_username !== false && $m_retrieve_result_password !== false &&
-          $m_retrieve_result_fname !== false && $m_retrieve_result_lname !== false)	{
+          $m_retrieve_result_fname !== false && $m_retrieve_result_lname !== false &&
+          $m_retrieve_result_validated !== false )	{
 
           $this->c_username = $m_retrieve_result_username;
           $this->c_password = $m_retrieve_result_password;
           $this->c_fname = $m_retrieve_result_fname;
           $this->c_lname = $m_retrieve_result_lname;
+          $this->c_validated = $m_retrieve_result_validated;
 
           $m_retrieve_result = true;
       }
       return $m_retrieve_result;
   }
 
-  private function store_data_in_session_file()
-  {
+  private function store_data_in_session_file()  {
     $m_store_result = false;
-    $m_store_result_username = $this->c_obj_wrapper_session_file->set_session('user_name', $this->c_username);
-    $m_store_result_password = $this->c_obj_wrapper_session_file->set_session('password', $this->c_password);
-    $m_store_result_fname = $this->c_obj_wrapper_session_file->set_session('fname', $this->c_fname);
-    $m_store_result_lname = $this->c_obj_wrapper_session_file->set_session('lname', $this->c_lname);
+
+    if($this->c_sid == $this->c_validated) $this->c_validated = 'true';
+
+    $m_store_result_username = $this->c_obj_wrapper_session_file->set_session($this->c_username_label, $this->c_username);
+    $m_store_result_password = $this->c_obj_wrapper_session_file->set_session($this->c_password_label, $this->c_password);
+    $m_store_result_fname = $this->c_obj_wrapper_session_file->set_session($this->c_fname_label, $this->c_fname);
+    $m_store_result_lname = $this->c_obj_wrapper_session_file->set_session($this->c_lname_label, $this->c_lname);
+    $m_store_result_validated = $this->c_obj_wrapper_session_file->set_session($this->c_validated_label, $this->c_validated);
 
     if ($m_store_result_username !== false && $m_store_result_password !== false &&
-        $m_store_result_fname !== false && $m_store_result_lname !== false)	{
+        $m_store_result_fname !== false && $m_store_result_lname !== false &&
+        $m_store_result_validated !== false)	{
       $m_store_result = true;
     }
     return $m_store_result;
+  }
+
+  private function clear_data_in_session_file(){
+      $m_clear_result = false;
+      $m_clear_result_username = $this->c_obj_wrapper_session_file->unset_session($this->c_username_label);
+      $m_clear_result_password = $this->c_obj_wrapper_session_file->unset_session($this->c_password_label);
+      $m_clear_result_fname = $this->c_obj_wrapper_session_file->unset_session($this->c_fname_label);
+      $m_clear_result_lname = $this->c_obj_wrapper_session_file->unset_session($this->c_lname_label);
+      $m_clear_result_validated = $this->c_obj_wrapper_session_file->unset_session($this->c_validated_label);
+
+      if ($m_clear_result_username !== false && $m_clear_result_password !== false &&
+          $m_clear_result_fname !== false && $m_clear_result_lname !== false &&
+          $m_clear_result_validated !== false)	{
+          $m_clear_result = true;
+      }
+      return $m_clear_result;
   }
 
 }

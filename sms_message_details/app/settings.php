@@ -18,11 +18,15 @@ $css_path = $url_root . '/css/standard.css';
 $session_path = $url_root;
 define('CSS_PATH', $css_path);
 define('SESSION_PATH', $session_path);
+define('ROOT_PATH', $url_root);
 define('APP_NAME', 'SMS Seeker');
 define('LANDING_PAGE', $_SERVER['SCRIPT_NAME']);
 
-$arr_detail_types = ['code' => 'GetISOCountryCodeByCountyName', 'currency' => 'GetCurrencyByCountry', 'curcode' => 'GetCurrencyCodeByCurrencyName', 'gmt' => 'GetGMTbyCountry'];
-define('DETAIL_TYPES', $arr_detail_types);
+define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
+define ('BCRYPT_COST', 12);
+
+define ('OPENSSL_KEY', 'gbmr2sbqvt84ns3ka6nupj4apo');
+define ('OPENSSL_IV', '0123456789012345');
 
 $settings = [
   "settings" => [
@@ -38,6 +42,21 @@ $settings = [
         'auto_reload' => true,
       ]],
   ],
+  'pdo' => [
+      'rdbms' => 'mysql',
+      'host' => 'localhost',
+      'db_name' => 'session_db',
+      'port' => '3306',
+      'user_name' => 'session_user',
+      'user_password' => 'session_user_pass',
+      'charset' => 'utf8',
+      'collation' => 'utf8_unicode_ci',
+      'options' => [
+          PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+          PDO::ATTR_EMULATE_PREPARES   => true,
+      ],
+  ]
 
 ];
 

@@ -75,7 +75,9 @@ class __TwigTemplate_00d6d558d6b950d719cbbb56b5de23d617e325f617b72526fb05c85beee
                         <input type=\"password\" name=\"password\" required autocomplete=\"off\"/>
                     </div>
 
-                    <button type=\"submit\" class=\"button button-block\"/>Sign Up</button>
+                    <input type=\"hidden\" name=\"source\" value=\"signup\"/>
+
+                    <button type=\"submit\" class=\"button green-colour button-block\"/>Sign Up</button>
 
                 </form>
 
@@ -85,7 +87,7 @@ class __TwigTemplate_00d6d558d6b950d719cbbb56b5de23d617e325f617b72526fb05c85beee
                 <h1>Welcome Back!</h1>
 
                 <form action=\"";
-        // line 54
+        // line 56
         echo twig_escape_filter($this->env, ($context["action_login"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method"] ?? null), "html", null, true);
@@ -105,8 +107,9 @@ class __TwigTemplate_00d6d558d6b950d719cbbb56b5de23d617e325f617b72526fb05c85beee
                         <input type=\"password\" name=\"password\" required autocomplete=\"off\"/>
                     </div>
 
+                    <input type=\"hidden\" name=\"source\" value=\"login\"/>
 
-                    <button type=\"submit\" class=\"button button-block\"/>Log In</button>
+                    <button type=\"submit\" class=\"button green-colour button-block\"/>Log In</button>
 
                 </form>
 
@@ -132,7 +135,7 @@ class __TwigTemplate_00d6d558d6b950d719cbbb56b5de23d617e325f617b72526fb05c85beee
 
     public function getDebugInfo()
     {
-        return array (  89 => 54,  44 => 14,  31 => 3,  28 => 2,  11 => 1,);
+        return array (  91 => 56,  44 => 14,  31 => 3,  28 => 2,  11 => 1,);
     }
 
     public function getSourceContext()

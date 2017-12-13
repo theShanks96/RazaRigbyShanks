@@ -219,7 +219,6 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #16a085;
   color: #ffffff;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -235,29 +234,28 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  background: #16a085;
   color: #ffffff;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
 }
-.red-button{
+.red-colour{
     background: #E26A6A;
 }
-.blue-button{
+.green-colour{
+  background: #16a085;
+}
+.blue-colour{
     background: #3498DB;
 }
 
-.button:hover, .button:focus {
+.green-colour:hover, .green-colour:focus {
   background: #65C6BB;
 }
-.mini-button:hover, .mini-button:focus {
-  background: #65C6BB;
-}
-.red-button:hover, .red-button:focus{
+.red-colour:hover, .red-colour:focus{
     background: #F1A9A0;
 }
-.blue-button:hover, .blue-button:focus{
+.blue-colour:hover, .blue-colour:focus{
     background: #6BB9F0;
 }
 
@@ -266,7 +264,3 @@ textarea {
   width: 100%;
 }
 
-.forgot {
-  margin-top: -20px;
-  text-align: right;
-}

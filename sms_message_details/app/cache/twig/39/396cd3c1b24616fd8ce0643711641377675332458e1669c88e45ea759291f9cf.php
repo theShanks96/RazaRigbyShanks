@@ -1,7 +1,7 @@
 <?php
 
 /* alert_layout.html.twig */
-class __TwigTemplate_7104eff255a5b1b1ff2e55563137e0d12b8343d755bb564239712f7dee34c4cf extends Twig_Template
+class __TwigTemplate_dce629c34364ef199e3caed4f1700492c158b7785d12a7a11902790693c96584 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -46,7 +46,7 @@ class __TwigTemplate_7104eff255a5b1b1ff2e55563137e0d12b8343d755bb564239712f7dee3
         echo twig_escape_filter($this->env, ($context["page_text"] ?? null), "html", null, true);
         echo "</p>
 
-                    <button type=\"submit\" class=\"button button-block\"/>Go Back</button>
+                    <button type=\"submit\" class=\"button blue-colour button-block\"/>Understood</button>
 
                 </form>
 
@@ -60,7 +60,6 @@ class __TwigTemplate_7104eff255a5b1b1ff2e55563137e0d12b8343d755bb564239712f7dee3
 
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script  src=\"js/script.js\"></script>
 ";
     }
 

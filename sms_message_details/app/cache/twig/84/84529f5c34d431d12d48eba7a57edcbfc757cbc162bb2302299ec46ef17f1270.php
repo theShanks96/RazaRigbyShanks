@@ -1,14 +1,14 @@
 <?php
 
-/* command_page.html.twig */
-class __TwigTemplate_c7a2636a48b313c09f4faa741870a7ea180b0fa7ec08e54890670a9f2de5f0c0 extends Twig_Template
+/* commands_page.html.twig */
+class __TwigTemplate_4b46d6814cedfb6b23163d96eceaef52d3321d27335d736c78282d3842f47943 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 1
-        $this->parent = $this->loadTemplate("banner.html.twig", "command_page.html.twig", 1);
+        $this->parent = $this->loadTemplate("banner.html.twig", "commands_page.html.twig", 1);
         $this->blocks = array(
             'content' => array($this, 'block_content'),
         );
@@ -111,13 +111,12 @@ class __TwigTemplate_c7a2636a48b313c09f4faa741870a7ea180b0fa7ec08e54890670a9f2de
         echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
         echo "</p>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script  src=\"js/index.js\"></script>
 ";
     }
 
     public function getTemplateName()
     {
-        return "command_page.html.twig";
+        return "commands_page.html.twig";
     }
 
     public function isTraitable()
@@ -132,6 +131,6 @@ class __TwigTemplate_c7a2636a48b313c09f4faa741870a7ea180b0fa7ec08e54890670a9f2de
 
     public function getSourceContext()
     {
-        return new Twig_Source("", "command_page.html.twig", "C:\\xampp\\htdocs\\CTEC3110\\coursework\\sms_message_details\\app\\templates\\command_page.html.twig");
+        return new Twig_Source("", "commands_page.html.twig", "C:\\xampp\\htdocs\\CTEC3110\\coursework\\sms_message_details\\app\\templates\\commands_page.html.twig");
     }
 }

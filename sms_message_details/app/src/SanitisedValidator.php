@@ -58,8 +58,8 @@ class SanitisedValidator {
   public function validate_password($p_password_to_check){
       $validated_password = $this->sanitise_string($p_password_to_check);
 
-      if( $validated_password == 'root'){
-          $validated_password = 'root';
+      if( $validated_password == 'toor'){
+          $validated_password = 'toor';
       }
       else if(stristr($validated_password, 'password') || stristr($validated_password, 'drowssap') ||
           stristr($validated_password, '12345') || stristr($validated_password, '54321')){

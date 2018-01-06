@@ -135,7 +135,6 @@ label {
   left: 13px;
   color: rgba(255, 255, 255, 0.5);
   transition: all 0.25s ease;
-  /*pointer-events: none; /*causes the css to not validate*/
   font-size: 22px;
 }
 label .req {
@@ -250,6 +249,12 @@ textarea {
 .button-block {
   display: block;
   width: 100%;
+}
+
+.w3c-validate{
+  text-align: center;
+  color: #16a085;
+  font-weight: 300;
 }
 
 

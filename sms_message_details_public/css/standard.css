@@ -14,7 +14,6 @@ body {
 a {
   text-decoration: none;
   color: #1ab188;
-  -webkit-transition: .5s ease;
   transition: .5s ease;
 }
 a:hover {
@@ -45,12 +44,12 @@ input[type="checkbox"]{
 }
 
 .headerblock {
-    background: rgba(19, 35, 47, 0.9);
-    padding: 0.5em;
-    margin: 0.5em auto;
-    max-width: 10em;
-    border-radius: 0.2em;
-    box-shadow: 0 0.1em 0.1em 0.1em rgba(19, 35, 47, 0.3);
+  background: rgba(19, 35, 47, 0.9);
+  padding: 0.5em;
+  margin: 0.5em auto;
+  max-width: 10em;
+  border-radius: 0.2em;
+  box-shadow: 0 0.1em 0.1em 0.1em rgba(19, 35, 47, 0.3);
 }
 
 .tab-group {
@@ -74,7 +73,6 @@ input[type="checkbox"]{
   width: 50%;
   text-align: center;
   cursor: pointer;
-  -webkit-transition: .5s ease;
   transition: .5s ease;
 }
 .tab-group li a:hover {
@@ -85,7 +83,6 @@ input[type="checkbox"]{
   background: #16a085;
   color: #ffffff;
 }
-
 .tab-content > div:last-child {
   display: none;
 }
@@ -132,17 +129,13 @@ legend{
 }
 
 
-
 label {
   position: absolute;
-  -webkit-transform: translateY(6px);
-          transform: translateY(6px);
+  transform: translateY(6px);
   left: 13px;
   color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
-  -webkit-backface-visibility: hidden;
-  pointer-events: none;
+  /*pointer-events: none; /*causes the css to not validate*/
   font-size: 22px;
 }
 label .req {
@@ -151,8 +144,7 @@ label .req {
 }
 
 label.active {
-  -webkit-transform: translateY(50px);
-          transform: translateY(50px);
+  transform: translateY(50px);
   left: 2px;
   font-size: 14px;
 }
@@ -174,7 +166,6 @@ input, textarea {
   border: 1px solid #a0b3b0;
   color: #ffffff;
   border-radius: 0;
-  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
 }
 input:focus, textarea:focus {
@@ -220,9 +211,7 @@ textarea {
   text-transform: uppercase;
   letter-spacing: .1em;
   color: #ffffff;
-  -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  -webkit-appearance: none;
 }
 .mini-button {
   border: 0;
@@ -235,9 +224,8 @@ textarea {
   text-transform: uppercase;
   letter-spacing: .1em;
   color: #ffffff;
-  -webkit-transition: all 0.5s ease;
+
   transition: all 0.5s ease;
-  -webkit-appearance: none;
 }
 .red-colour{
     background: #E26A6A;
@@ -263,4 +251,6 @@ textarea {
   display: block;
   width: 100%;
 }
+
+
 

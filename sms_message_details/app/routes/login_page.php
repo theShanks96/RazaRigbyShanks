@@ -42,7 +42,7 @@ $app->get('/', function(Request $request, Response $response)
     /** Variables that are assigned as instances of their class, called from the dependencies.php file */
 
     /** @var Object $validator_obj is used to ensure Strings are both sanitised and validated throughout the app */
-    $this->validator = $this->get('sanitised_validator'); //should be changed to validator_obj for consistency, however doing this breaks the app
+    $this->validator_obj = $this->get('sanitised_validator'); //should be changed to validator_obj for consistency, however doing this breaks the app
     /** @var Object $profile_obj used to model the user profile's information */
     $this->profile_obj = $this->get('profile_model');
     /** @var Object $xml_parser is used to parse messages from the M2M Soap server with and turn it into XML */
@@ -77,14 +77,14 @@ $app->get('/', function(Request $request, Response $response)
      * This function is supplied with each user detail in the current session, by calling the perform_detail_retrieval
      * function in the the Session_Model class (Note that an existing users details do not need to be validated again)
      */
-    $this->validated_username = $this->validator->sanitise_string($this->session_obj->perform_detail_retrieval('username'));
-    $this->validated_password = $this->validator->sanitise_string($this->session_obj->perform_detail_retrieval('password'));
-    $this->validated_fname = $this->validator->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
-    $this->validated_lname = $this->validator->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
-    $this->validated_status = $this->validator->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
+    $this->validated_username = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('username'));
+    $this->validated_password = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('password'));
+    $this->validated_fname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
+    $this->validated_lname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
+    $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
 
-    //echo $this->validator->sanitise_string('To locate the session file, turn on the echo session_id'); // xampp/tmp/ this is so you can see the session id
-    //echo session_id();
+    //echo $this->validator_obj->sanitise_string('To locate the session file, turn on the echo session_id'); // xampp/tmp/ this is so you can see the session id
+    echo session_id();
 
     /** If the following variables are not null then login and display the main commands page, else display the login page */
     if($this->validated_username != null && $this->validated_password != null && $this->validated_status)
@@ -98,8 +98,8 @@ $app->get('/', function(Request $request, Response $response)
                 'method_post' => 'post', //method_post represents post
                 'page_title' => APP_NAME, //the title of the browser tab
                 'page_heading_1' => APP_NAME, //the large box containing the word 'SMS Seeker'
-                'greeting_text' => $this->validator->sanitise_string('Welcome Back ' . $this->validated_fname . ' ' . $this->validated_lname), //'Welcome Back first name surname'
-                'page_text' =>  $this->validator->sanitise_string('Please select the desired command:'), //'Please select the desired command'
+                'greeting_text' => $this->validator_obj->sanitise_string('Welcome Back ' . $this->validated_fname . ' ' . $this->validated_lname), //'Welcome Back first name surname'
+                'page_text' =>  $this->validator_obj->sanitise_string('Please select the desired command:'), //'Please select the desired command'
                 'action_saved' => './commands/saved',
                 'action_download' => './commands/download',
                 'action_display' => './commands/display',
@@ -121,8 +121,8 @@ $app->get('/', function(Request $request, Response $response)
                 'method' => 'post',
                 'page_title' => APP_NAME,
                 'page_heading_1' => APP_NAME,
-                'page_heading_2' => $this->validator->sanitise_string('Perform many SMS operations and management.'),
-                'page_text' => $this->validator->sanitise_string('It is required that you login or register in order to check or send messages.'),
+                'page_heading_2' => $this->validator_obj->sanitise_string('Perform many SMS operations and management.'),
+                'page_text' => $this->validator_obj->sanitise_string('It is required that you login or register in order to check or send messages.'),
                 'action_login' => 'index.php/commands',
                 'action_signup' => 'index.php/commands',
                 'initial_input_box_value' => null,
@@ -147,7 +147,7 @@ $app->post('/commands/logout', function(Request $request, Response $response) us
 
         $this->arr_tainted_params = $request->getParsedBody();
 
-        $this->validator_obj = $this->get('sanitised_validator');
+        $this->validator_obj_obj = $this->get('sanitised_validator');
         $this->profile_obj = $this->get('profile_model');
         $this->session_wrapper = $this->get('session_wrapper');
         $this->session_obj = $this->get('session_model');
@@ -167,8 +167,8 @@ $app->post('/commands/logout', function(Request $request, Response $response) us
          * The same applies as before in the login section (read line 76), however this time only the first name and
          * surname are sanitised as these are displayed as part of the successful logout message
          */
-        $this->validated_fname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
-        $this->validated_lname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
+        $this->validated_fname = $this->validator_obj_obj->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
+        $this->validated_lname = $this->validator_obj_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
 
         /** The current session object has it's contents cleared */
         $this->session_obj->clear_data();
@@ -183,8 +183,8 @@ $app->post('/commands/logout', function(Request $request, Response $response) us
                 'initial_input_box_value' => null,
                 'page_title' => APP_NAME,
                 'page_heading_1' => APP_NAME,
-                'page_heading_2' => $this->validator_obj->sanitise_string('Logged Out'),
-                'page_text' => $this->validator_obj->sanitise_string($this->validated_fname . ' ' . $this->validated_lname . ', you have been successfully logged out.')
+                'page_heading_2' => $this->validator_obj_obj->sanitise_string('Logged Out'),
+                'page_text' => $this->validator_obj_obj->sanitise_string($this->validated_fname . ' ' . $this->validated_lname . ', you have been successfully logged out.')
             ]);
 
 })->setName('logout');

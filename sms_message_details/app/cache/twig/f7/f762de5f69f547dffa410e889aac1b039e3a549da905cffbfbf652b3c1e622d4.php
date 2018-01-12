@@ -48,7 +48,7 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
         echo "\">
-                    <button type=\"submit\" class=\"mini-button green-colour button-block\">Saved Messages</button>
+                    <button type=\"submit\" class=\"mini-button blue-colour button-block\">Saved Messages</button>
                 </form>
                 <form action=\"";
         // line 14
@@ -56,7 +56,7 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
         echo "\">
-                    <button type=\"submit\" class=\"mini-button blue-colour button-block\">Download Messages</button>
+                    <button type=\"submit\" class=\"mini-button green-colour button-block\">Download Messages</button>
                 </form>
                 <form action=\"";
         // line 17
@@ -64,18 +64,10 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
         echo "\">
-                    <button type=\"submit\" class=\"mini-button green-colour button-block\">Display Messages</button>
+                    <button type=\"submit\" class=\"mini-button blue-colour button-block\">Display Messages</button>
                 </form>
                 <form action=\"";
         // line 20
-        echo twig_escape_filter($this->env, ($context["action_filter"] ?? null), "html", null, true);
-        echo "\" method=\"";
-        echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
-        echo "\">
-                    <button type=\"submit\" class=\"mini-button blue-colour button-block\">Filter by Metadata</button>
-                </form>
-                <form action=\"";
-        // line 23
         echo twig_escape_filter($this->env, ($context["action_send"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -84,7 +76,7 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
                 </form>
 
                 <form action=\"";
-        // line 27
+        // line 24
         echo twig_escape_filter($this->env, ($context["action_change"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -93,7 +85,7 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
                 </form>
 
                 <form action=\"";
-        // line 31
+        // line 28
         echo twig_escape_filter($this->env, ($context["action_logout"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -111,13 +103,13 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
     </div> <!--FORM END-->
 
     <p>";
-        // line 44
+        // line 41
         echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
         echo "</p>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <div class = \"w3c-validate\">
-        <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Table Pagee</a>
+        <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Table Page</a>
         &nbsp;&nbsp;
         <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">Valid CSS Table Page</a>
     </div>
@@ -137,7 +129,7 @@ class __TwigTemplate_f6f2001cab0da0a51401b9ce0eecda047f26e229a5e490a0459376104d6
 
     public function getDebugInfo()
     {
-        return array (  115 => 44,  97 => 31,  88 => 27,  79 => 23,  71 => 20,  63 => 17,  55 => 14,  47 => 11,  43 => 10,  39 => 9,  31 => 3,  28 => 2,  11 => 1,);
+        return array (  107 => 41,  89 => 28,  80 => 24,  71 => 20,  63 => 17,  55 => 14,  47 => 11,  43 => 10,  39 => 9,  31 => 3,  28 => 2,  11 => 1,);
     }
 
     public function getSourceContext()

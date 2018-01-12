@@ -160,7 +160,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'css_path' => CSS_PATH,
                             'landing_page' => LANDING_PAGE,
                             'method' => 'get',
-                            'action' => './',
+                            'action' => '../',
                             'initial_input_box_value' => null,
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,

@@ -36,6 +36,23 @@ $app->post('/commands/download', function(Request $request, Response $response) 
     $this->bcrypt_wrapper = $this->get('bcrypt_wrapper');
     $this->openssl_wrapper = $this->get('openssl_wrapper');
 
+    $this->soap_obj = $this->get('soap_model');
+    $this->soap_obj->set_xml_parser($this->xml_parser);
+    $this->soap_obj->set_validator($this->validator_obj);
+
+    $this->arr_tainted_messages = $this->soap_obj->peek_messages('+447817814149');
+    $this->arr_validated_messages = [];
+
+    foreach($this->arr_tainted_messages as $msg){
+        $validated_msg = $this->validator_obj->validate_message($msg);
+        if($validated_msg != null){
+            array_push($this->arr_validated_messages, implode(',', $validated_msg));
+            echo '<br>' . end($this->arr_validated_messages);
+        }
+    }
+
+    $this->session_obj->set_session_array_messages($this->arr_validated_messages);
+
     $this->session_obj->set_wrapper_session_file($this->session_wrapper);
     $this->session_obj->set_base64_wrapper($this->base64_wrapper);
     $this->session_obj->set_bcrypt_wrapper($this->bcrypt_wrapper);
@@ -44,11 +61,15 @@ $app->post('/commands/download', function(Request $request, Response $response) 
     $this->session_obj->generate_labels();
     $this->session_obj->retrieve_secure_data();
 
+
+
     $this->validated_username = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('username'));
     $this->validated_password = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('password'));
     $this->validated_fname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
     $this->validated_lname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
     $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
+
+    $this->session_obj->store_secure_data();
 
     /**
      * When downloading messages it is useful to know what time and date they were downloaded, therefore the timezone

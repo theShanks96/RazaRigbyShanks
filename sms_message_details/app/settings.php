@@ -10,6 +10,11 @@ ini_set('display_errors', 'On');
 ini_set('html_errors', 'On');
 ini_set('xdebug.trace_output_name', 'country_details.%t');
 
+define('m2m_username', '17kongbeta');
+define('m2m_password', 'GoofyGoober2048');
+define('m2m_destination', '+447817814149');
+define('group_denomination', '17-3110-AN');
+
 define('DIRSEP', DIRECTORY_SEPARATOR);
 
 $url_root = $_SERVER['SCRIPT_NAME'];
@@ -26,7 +31,7 @@ define ('BCRYPT_ALGO', PASSWORD_DEFAULT);
 define ('BCRYPT_COST', 12);
 
 define ('OPENSSL_KEY', 'gbmr2sbqvt84ns3ka6nupj4apo');
-define ('OPENSSL_IV', '0123456789012345');
+define ('OPENSSL_IV', '4929610407272976');
 
 $settings = [
   "settings" => [
@@ -45,10 +50,10 @@ $settings = [
   'pdo' => [
       'rdbms' => 'mysql',
       'host' => 'localhost',
-      'db_name' => 'session_db',
+      'db_name' => 'user_informationDB',
       'port' => '3306',
-      'user_name' => 'session_user',
-      'user_password' => 'session_user_pass',
+      'user_name' => 'user_access',
+      'user_password' => 'DC&Np5fnFj!v!ueo',
       'charset' => 'utf8',
       'collation' => 'utf8_unicode_ci',
       'options' => [

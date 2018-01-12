@@ -13,7 +13,7 @@ class OpenSSLWrapper {
 
     public function __construct()   {
         $this->arr_cipher_methods = openssl_get_cipher_methods();
-        $this->c_iv = '0123456789012345';
+        $this->c_iv = OPENSSL_IV;
         //  for the time being this is sufficiently secure, although not ideal
 
         //TODO: Implement a more secure method of symmetric encryption that can be decrypted across multiple instances of this wrapper

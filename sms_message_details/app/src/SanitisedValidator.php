@@ -21,6 +21,19 @@ class SanitisedValidator {
       return $m_sanitised_string;
   }
 
+  public function validate_message($p_message_to_check){
+      $arr_validated_message = [];
+      if(stristr($p_message_to_check['MESSAGE'], '17-3110-AN')){
+          $arr_validated_message = explode(',', $this->sanitise_string($p_message_to_check['MESSAGE']));
+          array_splice($arr_validated_message, 0, 1);
+          array_unshift($arr_validated_message, $this->sanitise_string($p_message_to_check['DESTINATIONMSISDN']), $this->sanitise_string($p_message_to_check['RECEIVEDTIME']));
+          return $arr_validated_message;
+      }
+      else{
+          return null;
+      }
+  }
+
   public function validate_fname($p_fname_to_check)
   {
       $validated_fname = $this->sanitise_string(p_fname_to_check);

@@ -36,6 +36,12 @@ class SessionModel
 
   private $c_obj_openssl_wrapper;
 
+  private $c_arr_messages;
+  private $c_arr_session_messages;
+
+  private $c_saved_indicies;
+  private $c_session_saved_indicies;
+
   public function __construct()  {
       /** @var  c_username actual username information */
       $this->c_username = null;
@@ -49,6 +55,12 @@ class SessionModel
       $this->c_validated = null;
       /** @var  c_sid actual session id information */
       $this->c_sid = null;
+
+      $this->c_arr_messages = [];
+      $this->c_arr_session_messages = [];
+
+      $c_saved_indicies = null;
+      $c_session_saved_indicies = null;
 
       /** @var  c_obj_wrapper_session_file session wrapper */
       $this->c_obj_wrapper_session_file = null;
@@ -88,6 +100,14 @@ class SessionModel
       /** This merely sets the session model's information by retrieving it from the profile model */
   }
 
+  public function set_session_array_messages($p_arr_messages){
+      $this->c_arr_messages = $p_arr_messages;
+  }
+
+  public function set_session_saved_indices($p_saved_indicies){
+      $this->c_saved_indicies = $p_saved_indicies;
+  }
+
   public function set_sid($p_sid){
       /** @var  c_sid This is used throughout for validation purposes */
       $this->c_sid = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($p_sid, $p_sid));;
@@ -115,12 +135,20 @@ class SessionModel
   }
 
   public function store_secure_data(){
-      //    Todo: hashed and encrypted password is overlong, no encryption?
+      //    The password is both hashed and encrypted, although this makes it overlong, it is a ngeligible cost
       $this->c_username = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_username, $this->c_sid));
       $this->c_password = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_obj_bcrypt_wrapper->create_hashed_password($this->c_password), $this->c_sid));
       $this->c_fname = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_fname, $this->c_sid));
       $this->c_lname = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_lname, $this->c_sid));
       $this->c_validated = $this->c_obj_base64_wrapper->encode_base64($this->c_obj_openssl_wrapper->encrypt($this->c_validated, $this->c_sid));
+
+      if($this->c_arr_messages != [] && $this->c_arr_messages != null ){
+          $this->c_arr_session_messages = $this->c_arr_messages;
+      }
+
+      if($this->c_saved_indicies != '' && $this->c_saved_indicies != null){
+            $this->c_session_saved_indicies = $this->c_saved_indicies;
+      }
 
       $this->store_data_in_session_file();
 
@@ -142,6 +170,9 @@ class SessionModel
       $this->c_lname = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_lname), $this->c_sid);
       $this->c_validated = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_validated), $this->c_sid);
 
+      if($this->c_arr_messages != [] || $this->c_arr_messages != null ){
+          $this->c_arr_session_messages = $this->c_arr_messages;
+      }
       /** This decodes and decrypts the session file information */
   }
 
@@ -150,6 +181,7 @@ class SessionModel
   }
 
   public function clear_secure_data(){
+      $this->clear_data_in_session_file();
 
   }
 
@@ -170,7 +202,14 @@ class SessionModel
       else if($p_detail == 'validated'){
           return $this->c_validated;
       }
+      else if($p_detail == 'messages'){
+          return $this->c_arr_session_messages;
+      }
+      else if($p_detail == 'saved'){
+          return $this->c_session_saved_indicies;
+      }
   }
+
 
   private function retrieve_data_in_session_file(){
       $m_retrieve_result = false;
@@ -179,6 +218,20 @@ class SessionModel
       $m_retrieve_result_fname = $this->c_obj_wrapper_session_file->get_session($this->c_fname_label);
       $m_retrieve_result_lname = $this->c_obj_wrapper_session_file->get_session($this->c_lname_label);
       $m_retrieve_result_validated = $this->c_obj_wrapper_session_file->get_session($this->c_validated_label);
+
+      $m_retrieve_result_messages = $this->c_obj_wrapper_session_file->get_session('messages');
+      $m_retrieve_result_saved = $this->c_obj_wrapper_session_file->get_session('saved_messages');
+
+      if($m_retrieve_result_messages > 0 && $m_retrieve_result_messages != null){
+          for($i = 0; $i < $m_retrieve_result_messages; ++$i){
+              array_push($this->c_arr_session_messages, $this->c_obj_wrapper_session_file->get_session('msg_' . $i));
+          }
+          //$this->c_arr_session_messages = $this->c_arr_messages;
+      }
+
+      if($m_retrieve_result_saved != '' && $m_retrieve_result_saved != null){
+          $this->c_session_saved_indicies = $m_retrieve_result_saved;
+      }
 
       if ($m_retrieve_result_username !== false && $m_retrieve_result_password !== false &&
           $m_retrieve_result_fname !== false && $m_retrieve_result_lname !== false &&
@@ -205,6 +258,17 @@ class SessionModel
     $m_store_result_fname = $this->c_obj_wrapper_session_file->set_session($this->c_fname_label, $this->c_fname);
     $m_store_result_lname = $this->c_obj_wrapper_session_file->set_session($this->c_lname_label, $this->c_lname);
     $m_store_result_validated = $this->c_obj_wrapper_session_file->set_session($this->c_validated_label, $this->c_validated);
+
+    if($this->c_arr_session_messages != [] && $this->c_arr_session_messages != null ){
+       $this->c_obj_wrapper_session_file->set_session('messages', count($this->c_arr_session_messages));
+       for($i = 0; $i < count($this->c_arr_session_messages); ++$i){
+           $this->c_obj_wrapper_session_file->set_session('msg_' . $i, $this->c_arr_session_messages[$i]);
+       }
+    }
+
+      if($this->c_session_saved_indicies != '' && $this->c_session_saved_indicies != null){
+          $this->c_obj_wrapper_session_file->set_session('saved_messages', $this->c_session_saved_indicies);
+      }
 
     if ($m_store_result_username !== false && $m_store_result_password !== false &&
         $m_store_result_fname !== false && $m_store_result_lname !== false &&

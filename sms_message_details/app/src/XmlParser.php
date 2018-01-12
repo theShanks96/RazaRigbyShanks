@@ -28,8 +28,16 @@ class XmlParser
     //xml_parser_free($this->c_xml_parser);
   }
 
+  public function clear_set_data(){
+      $this->c_xml_string_to_parse = null;
+      $this->c_element_name = null;
+      $this->c_arr_temporary_attributes = [];
+      $this->c_arr_parsed_data = [];
+  }
+
   public function set_xml_string_to_parse($p_xml_string_to_parse)
   {
+      $this->clear_set_data();
     $this->c_xml_string_to_parse = $p_xml_string_to_parse;
   }
 

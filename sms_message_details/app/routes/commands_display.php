@@ -184,6 +184,7 @@ $app->post('/commands/display', function(Request $request, Response $response) u
             'css_path' => CSS_PATH,
             'landing_page' => LANDING_PAGE,
             'method_post' => 'post',
+            'action_update' => '../commands/display',
             'action_back' => '../commands',
             'action_next' => '../commands/display',
             'action_last' => '../commands/display',

@@ -10,25 +10,23 @@
 
                         <table class="legend-table" >
                             <tr><th colspan="2" class="legend-table">Metadata</th><th colspan="4" class="legend-table">Content</th></tr>
-                            <tr><td><input type="checkbox" checked="checked" id="destination"> </td> <td class="legend-table">Destination</td>
-                                <td><input type="checkbox" checked="checked" name="Switches"> </td> <td class="legend-table">Switches</td>
-                            <td><input type="checkbox" checked="checked" name="Temperature"> </td> <td class="legend-table">Temperature</td></tr>
-                            <tr><td><input type="checkbox" checked="checked" name="Timestamp"> </td> <td class="legend-table">Timestamp</td>
-                                <td><input type="checkbox" checked="checked" name="Fan"> </td> <td class="legend-table">Fan Direction</td>
-                            <td><input type="checkbox" checked="checked" name="Keypad"> </td> <td class="legend-table">Keypad</td></tr>
+                            <tr><td><input type="checkbox" checked id="destination_check"> </td> <td class="legend-table">Destination</td>
+                                <td><input type="checkbox" checked id="switches"> </td> <td class="legend-table">Switches</td>
+                            <td><input type="checkbox" checked id="temperature"> </td> <td class="legend-table">Temperature</td>
+                                </tr>
+                            <tr><td><input type="checkbox" checked id="timestamp"> </td> <td class="legend-table">Timestamp</td>
+                                <td><input type="checkbox" checked id="fan"> </td> <td class="legend-table">Fan Direction</td>
+                            <td><input type="checkbox" checked id="keypad"> </td> <td class="legend-table">Keypad</td>
+                                </tr>
+
                         </table>
 
                     </fieldset>
 
                     <table class="decorated">
                         <tr class="decorated">
-                            <th class="decorated" colspan="3">Metadata</th>
-                            <th class="decorated" colspan="8">Content</th>
-                        </tr>
-
-                        <tr class="decorated">
                             <th class="decorated" rowspan="2">#</th>
-                            <th class="decorated" rowspan="2">Destination</th>
+                            <th class="decorated" rowspan="2" id="destination_column">Destination</th>
                             <th class="decorated" rowspan="2">Timestamp</th>
                             <th class="decorated" colspan="4">Switches</th>
                             <th class="decorated" rowspan="2">Fan</th>
@@ -43,7 +41,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Zero_Indicator }}</td>
-                            <td class="decorated" name="destination">{{ Zero_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Zero_Destination }}</td>
                             <td class="decorated">{{ Zero_Timestamp }}</td>
                             <td class="decorated">{{ Zero_Switches_Zero }}</td>
                             <td class="decorated">{{ Zero_Switches_One }}</td>
@@ -55,7 +53,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ One_Indicator }}</td>
-                            <td class="decorated">{{ One_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ One_Destination }}</td>
                             <td class="decorated">{{ One_Timestamp }}</td>
                             <td class="decorated">{{ One_Switches_Zero }}</td>
                             <td class="decorated">{{ One_Switches_One }}</td>
@@ -67,7 +65,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Two_Indicator }}</td>
-                            <td class="decorated">{{ Two_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Two_Destination }}</td>
                             <td class="decorated">{{ Two_Timestamp }}</td>
                             <td class="decorated">{{ Two_Switches_Zero }}</td>
                             <td class="decorated">{{ Two_Switches_One }}</td>
@@ -79,7 +77,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Three_Indicator }}</td>
-                            <td class="decorated">{{ Three_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Three_Destination }}</td>
                             <td class="decorated">{{ Three_Timestamp }}</td>
                             <td class="decorated">{{ Three_Switches_Zero }}</td>
                             <td class="decorated">{{ Three_Switches_One }}</td>
@@ -91,7 +89,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Four_Indicator }}</td>
-                            <td class="decorated">{{ Four_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Four_Destination }}</td>
                             <td class="decorated">{{ Four_Timestamp }}</td>
                             <td class="decorated">{{ Four_Switches_Zero }}</td>
                             <td class="decorated">{{ Four_Switches_One }}</td>
@@ -103,7 +101,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Five_Indicator }}</td>
-                            <td class="decorated">{{ Five_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Five_Destination }}</td>
                             <td class="decorated">{{ Five_Timestamp }}</td>
                             <td class="decorated">{{ Five_Switches_Zero }}</td>
                             <td class="decorated">{{ Five_Switches_One }}</td>
@@ -115,7 +113,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Six_Indicator }}</td>
-                            <td class="decorated">{{ Six_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Six_Destination }}</td>
                             <td class="decorated">{{ Six_Timestamp }}</td>
                             <td class="decorated">{{ Six_Switches_Zero }}</td>
                             <td class="decorated">{{ Six_Switches_One }}</td>
@@ -127,7 +125,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Seven_Indicator }}</td>
-                            <td class="decorated">{{ Seven_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Seven_Destination }}</td>
                             <td class="decorated">{{ Seven_Timestamp }}</td>
                             <td class="decorated">{{ Seven_Switches_Zero }}</td>
                             <td class="decorated">{{ Seven_Switches_One }}</td>
@@ -139,7 +137,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Eight_Indicator }}</td>
-                            <td class="decorated">{{ Eight_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Eight_Destination }}</td>
                             <td class="decorated">{{ Eight_Timestamp }}</td>
                             <td class="decorated">{{ Eight_Switches_Zero }}</td>
                             <td class="decorated">{{ Eight_Switches_One }}</td>
@@ -151,7 +149,7 @@
                         </tr>
                         <tr class="decorated">
                             <td class="decorated">{{ Nine_Indicator }}</td>
-                            <td class="decorated">{{ Nine_Destination }}</td>
+                            <td class="decorated" id="destination_column">{{ Nine_Destination }}</td>
                             <td class="decorated">{{ Nine_Timestamp }}</td>
                             <td class="decorated">{{ Nine_Switches_Zero }}</td>
                             <td class="decorated">{{ Nine_Switches_One }}</td>

@@ -33,7 +33,6 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
 
     $this->arr_tainted_params = $request->getParsedBody();
     $this->arr_alters = [];
-    $this->arr_validated_alters = [];
 
     $this->validator_obj = $this->get('sanitised_validator');
     $this->profile_obj = $this->get('profile_model');
@@ -54,17 +53,19 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
 
     $this->arr_tainted_messages = $this->session_obj->perform_detail_retrieval('messages');
     $this->arr_validated_messages = [];
-    $this->arr_validated_keys = [];
 
     $this->arr_empty_value = array_fill(0 , 9, ' ' );
     //$this->arr_display_messages = array_fill(0, 9, $this->arr_empty_value);
 
     $this->arr_tainted_alters = explode(',', $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('saved')));
-    $this->arr_validated_alters = [];
+    $this->arr_validated_alters = array_fill(0 , count($this->arr_tainted_alters), ' ' );
 
-    foreach( $this->arr_tainted_alters as $alters){
-        if($alters <= count($this->arr_tainted_messages) && $alters >= 0)
-            array_push($this->arr_validated_alters, $alters);
+    var_dump($this->arr_tainted_alters);
+    var_dump($this->session_obj->perform_detail_retrieval('saved'));
+
+    for( $i = 0; $i < count($this->arr_tainted_alters); ++$i){
+        if($this->arr_tainted_alters[$i] <= count($this->arr_tainted_messages) && $this->arr_tainted_alters[$i] >= 0 && $this->arr_tainted_alters[$i] != '')
+            $this->arr_validated_alters[$i] = (int)$this->arr_tainted_alters[$i] + 1;
     }
 
     $current_page = 0;
@@ -72,7 +73,7 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
     //$total_pages = 5;
 
     $messages_count = 10;
-    if(count($this->arr_validated_alters) > 10) $messages_count = count($this->arr_tainted_messages);
+    if(count($this->arr_validated_alters) > 10) $messages_count = count($this->arr_validated_alters);
 
     $this->arr_validated_messages = array_fill(0, $messages_count, $this->arr_empty_value);
 
@@ -146,14 +147,11 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
     echo $this->validator_obj->sanitise_string($this->arr_tainted_params['source']);
     echo $this->validator_obj->sanitise_string($this->arr_tainted_params['last_page']);
 
-    $arr_message_index = [];
+    $arr_message_index = array_fill(0, $messages_count, '-');
 
     for($i = 0; $i < 10; ++$i){
-        if($this->arr_validated_alters[$i] != ' ' && $this->arr_validated_alters[$i] != -1 && $this->arr_validated_alters[$i] != 0) {
-            array_push($arr_message_index, $this->arr_validated_alters[$i] + 1);
-        }
-        else{
-            array_push($arr_message_index, '-');
+        if($this->arr_validated_alters[$i] != ' ' && $this->arr_validated_alters[$i] != -1 && $this->arr_validated_alters[$i] != 0 ) {
+            $arr_message_index[$i] =  $this->arr_validated_alters[$i];
         }
     }
 

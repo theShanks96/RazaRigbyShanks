@@ -123,6 +123,10 @@ $app->post('/commands/send/processed', function(Request $request, Response $resp
         $this->validated_message = $this->validator_obj->sanitise_string($tainted_message);
     }
 
+    /** Not sure how to explain this */
+    if($this->bcrypt_wrapper->authenticate_password($this->validated_password, $this->validated_session_password))
+        $this->authenticated_password = true;
+
     if($this->validated_username == m2m_username && $this->validated_password == m2m_password){
         $this->soap_obj->set_xml_parser($this->xml_parser);
         $this->soap_obj->set_validator($this->validator_obj);
@@ -167,15 +171,11 @@ $app->post('/commands/send/processed', function(Request $request, Response $resp
         $this->action_back = '../../commands';
     }
 
-    /** Not sure how to explain this */
-    else if($this->bcrypt_wrapper->authenticate_password($this->validated_password, $this->validated_session_password))
-        $this->authenticated_password = true;
-
     /**
      * If the validated_username is not equal to the validated_session_username and the password is not authenticated
      * then display an error message and return back to the change password form
      */
-    if($this->validated_username != $this->validated_session_username && !$this->authenticated_password)
+    elseif($this->validated_username != $this->validated_session_username && !$this->authenticated_password)
     {
         $this->page_text = 'Both Username and Current Password were Incorrect.';
         $this->action_back = '../../commands/send';
@@ -208,7 +208,6 @@ $app->post('/commands/send/processed', function(Request $request, Response $resp
 
         $this->soap_obj->set_xml_parser($this->xml_parser);
         $this->soap_obj->set_validator($this->validator_obj);
-        $this->soap_obj->set_parameters('send');
 
         $this->soap_obj->send_message(m2m_destination, $this->validated_message);
 

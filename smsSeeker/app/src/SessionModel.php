@@ -153,7 +153,7 @@ class SessionModel
             $this->c_session_saved_indicies = $this->c_saved_indicies;
       }
 
-      $this->store_data_in_session_file();
+      return $this->store_data_in_session_file();
 
       /** This first encrypts, then encodes most information
        * Except for the password, which is first hashed, then encrypted, then encoded
@@ -165,7 +165,7 @@ class SessionModel
   }
 
   public function retrieve_secure_data(){
-      $this->retrieve_data_in_session_file();
+      $m_retrieve_result = $this->retrieve_data_in_session_file();
 
       $this->c_username = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_username), $this->c_sid);
       $this->c_password = $this->c_obj_openssl_wrapper->decrypt($this->c_obj_base64_wrapper->decode_base64($this->c_password), $this->c_sid);
@@ -181,6 +181,8 @@ class SessionModel
           //$this->c_arr_messages = [];
       }
       /** This decodes and decrypts the session file information */
+
+      return $m_retrieve_result;
   }
 
   public function clear_data(){

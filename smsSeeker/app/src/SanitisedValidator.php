@@ -23,9 +23,9 @@ class SanitisedValidator {
 
   public function validate_message($p_message_to_check){
       $arr_validated_message = [];
-      if(stristr($p_message_to_check['MESSAGE'], '17-3110-AN')){
+      if(stristr($p_message_to_check['MESSAGE'], group_denomination) && !stristr($p_message_to_check['MESSAGE'], 'PhpUnit')){
           $arr_validated_message = explode(',', $this->sanitise_string($p_message_to_check['MESSAGE']));
-          array_splice($arr_validated_message, 0, 1);
+          array_shift($arr_validated_message);
           array_unshift($arr_validated_message, $this->sanitise_string($p_message_to_check['DESTINATIONMSISDN']), $this->sanitise_string($p_message_to_check['RECEIVEDTIME']));
           return $arr_validated_message;
       }
@@ -36,26 +36,26 @@ class SanitisedValidator {
 
   public function validate_fname($p_fname_to_check)
   {
-      $validated_fname = $this->sanitise_string(p_fname_to_check);
+      $validated_fname = $this->sanitise_string($p_fname_to_check);
 
       if (strlen($validated_fname) < 4 || strlen($validated_fname) > 20 )
-          $validated_lname = 'A first name should be between 4 and 20 characters';
+          $validated_fname = 'A first name should be between 4 and 20 characters';
 
-      elseif (strisstr($validated_fname) == 'root' || strisstr($validated_fname) == 'user' )
-          $validated_lname = 'Invalid first name';
+      elseif ($validated_fname == 'root' || $validated_fname == 'user' )
+          $validated_fname = 'Invalid first name';
 
       return $validated_fname;
   }
 
   public function validate_lname($p_lname_to_check)
   {
-      $validated_lname = $this->sanitise_string(p_lname_to_check);
+      $validated_lname = $this->sanitise_string($p_lname_to_check);
 
       if (strlen($validated_lname) < 4 || strlen($validated_lname) > 20 )
           $validated_lname = 'A last name should be between 4 and 20 characters';
 
-      elseif (strisstr($validated_lname) == 'root' || strisstr($validated_lname) == 'user')
-          $validated_lname = 'A last name cannot be' . $validated_lname;
+      elseif ($validated_lname == 'root' || $validated_lname == 'user')
+          $validated_lname = 'A last name cannot be ' . $validated_lname;
 
       return $validated_lname;
   }

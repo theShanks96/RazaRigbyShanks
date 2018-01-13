@@ -41,6 +41,14 @@ class XmlParser
     $this->c_xml_string_to_parse = $p_xml_string_to_parse;
   }
 
+  //    The following two methods are only used for unit testing
+  public function set_element_name($p_element_name){
+      $this->c_element_name = $p_element_name;
+  }
+  public function get_element_name(){
+      return $this->c_element_name;
+  }
+
   public function get_parsed_data()
   {
     return $this->c_arr_parsed_data;

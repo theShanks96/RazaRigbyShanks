@@ -29,7 +29,7 @@ class SoapModel {
     public function set_validator($p_obj_validator){
         $this->c_obj_validator = $p_obj_validator;
     }
-
+/*
     public function perform_detail_retrieval()
     {
         $soapresult = null;
@@ -51,7 +51,7 @@ class SoapModel {
 
         $this->c_result = $result;
     }
-
+*/
     private function create_soap_client()
     {
         $obj_soap_client_handle = false;
@@ -88,8 +88,10 @@ class SoapModel {
         try{
             //$obj_soap_client_handle->__soapCall($soapfunction, [$parameter]);
             $obj_soap_client_handle->sendMessage(m2m_username, m2m_password, $p_msisdn, $validated_message, false, 'SMS');
+            return 'message_sent';
         }catch (SoapFault $m_obj_exception) {
             trigger_error($m_obj_exception);
+            return 'soap_fault';
         }
     }
 
@@ -138,7 +140,7 @@ class SoapModel {
 
         return $arr_encoded_messages;
     }
-
+/*
     private function retrieve_detail($p_obj_soap_client_handle)
     {
         $result = null;
@@ -177,7 +179,7 @@ class SoapModel {
 
         return $result;
     }
-
+*/
     public function get_result()
     {
         return $this->c_result;

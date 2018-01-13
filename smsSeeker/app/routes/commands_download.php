@@ -47,7 +47,7 @@ $app->post('/commands/download', function(Request $request, Response $response) 
         $validated_msg = $this->validator_obj->validate_message($msg);
         if($validated_msg != null){
             array_push($this->arr_validated_messages, implode(',', $validated_msg));
-            echo '<br>' . end($this->arr_validated_messages);
+            //echo '<br>' . end($this->arr_validated_messages);
         }
     }
 

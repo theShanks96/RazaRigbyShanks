@@ -1,0 +1,63 @@
+CREATE DATABASE `user_informationDB` COLLATE 'utf8_unicode_ci';
+GRANT SELECT, INSERT, UPDATE ON user_informationDB.* TO 'session_user'@'localhost' 
+IDENTIFIED BY 'session_user_pass';
+
+
+
+USE user_informationDB
+
+
+CREATE TABLE `userTable` (
+
+	`user_name` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+	`userfullName` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+	`user_pass` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+	`msgsDownloaded` varchar(40) COLLATE utf_unicode_ci NOT NULL,
+	`msgSaved` varchar(40) COLLATE utf_unicode_ci NOT NULL,
+)	ENGINE=MySQL DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+Drop table:
+
+DROP TABLE userTable
+
+
+
+1. retrieve information 
+
+
+SELECT * FROM userTable;
+
+
+2. Insert user details on sign up
+
+INSERT INTO userTable 
+SET user_name = 'test', $validated_name, $validated_pass) // to change: validated_name
+
+
+3. update password
+
+UPDATE userTable
+
+SET user_pass = $validated_new_password
+WHERE  user_pass = $validated_password
+
+
+
+
+4.writing messages
+
+INSERT INTO userTable(msgsDownloaded)
+VALUES ($arr_validated_messages)
+
+
+// SELECT $arr_validated_messages
+//SET msgsDownloaded = $arr_validated_messages
+
+
+
+
+5.changing saved messages
+INSERT INTO userTable(msgSaved)
+VALUES ($validatedMessage)
+

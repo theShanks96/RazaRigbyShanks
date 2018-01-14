@@ -116,6 +116,12 @@ class __TwigTemplate_5344e520616a4a89ca3b3b41b9fd878dd1dde615d7904ab4308a1e15586
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src=\"../../js/script.js\"></script>
+
+    <div class = \"w3c-validate\">
+        <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Table Pagee</a>
+        &nbsp;&nbsp;
+        <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">Valid CSS Table Page</a>
+    </div>
 ";
     }
 

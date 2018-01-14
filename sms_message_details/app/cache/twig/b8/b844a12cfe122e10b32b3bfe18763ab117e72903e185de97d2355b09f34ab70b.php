@@ -115,11 +115,13 @@ class __TwigTemplate_46be5b54c2e549022575be1a584aa5718ed04b5e527f1f1ac4734ed80c9
         echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
         echo "</p>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <div>
-        <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Commands Page</a>
+
+    <div class = \"w3c-validate\">
+        <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Table Pagee</a>
         &nbsp;&nbsp;
-        <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">Valid CSS Commands Page</a>
+        <a href=\"http://jigsaw.w3.org/css-validator/check/referer\">Valid CSS Table Page</a>
     </div>
+
 ";
     }
 

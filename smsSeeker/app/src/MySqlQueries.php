@@ -1,12 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Shanks
- * Date: 01/12/2017
- * Time: 10:23
+ * MySQLQueries.php
+ *
+ * This class provides functions to perform operations on the
  */
 
 class MySqlQueries {
+
     public function __construct() { }
 
     public function __destruct() { }

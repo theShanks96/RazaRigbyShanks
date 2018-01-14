@@ -1,15 +1,30 @@
 <?php
 
-class SanitisedValidator {
+/**
+ * SanitisedValidator.php
+ *
+ * This class is used ensure items in the app are properly sanitised and validated. These methods/functions should
+ * either sanitise the string or sanitise and then validate. No validation should occur without sanitation occurring
+ * first, and as such this class is both.
+ */
 
-    /**
-     * It should be noted that these methods/functions should either sanitise the string or sanitise and then validate
-     * No validation should occur without sanitation occurring first, and as such this class is both.
-     */
+class SanitisedValidator {
 
   public function __construct() { }
 
   public function __destruct() { }
+
+  /**
+   * This is a generic function that takes in any string as a parameter and sanitises it only. If the string to sanitise
+   * parameter is not empty then we assign the sanitised string variable to the filter_var function and pass in the
+   *string to sanitise parameter.
+   *
+   * The sanitised string variable is then returned which holds the original string to sanitise with the filter_var
+   * function applied.
+   *
+   * @param String $p_string_to_sanitise
+   * @return String
+   */
 
   public function sanitise_string($p_string_to_sanitise) {
 
@@ -34,6 +49,18 @@ class SanitisedValidator {
       }
   }
 
+ /**
+  * This function is used to ensure that a users first name is validated and sanitised before it can be used in the app.
+  * It assigns the validated fname variable to the sanitise_string method, which takes in the fname to check parameter
+  * as input. Once the validated_fname variable has been sanitised it is then passed into an if/else statement to ensure
+  * it isn't too short or too long as well as ensuring it doesn't match certain keywords.
+  *
+  * The fully sanitised and validated fname is then returned.
+  *
+  * @param String $p_fname_to_check
+  * @return String
+ */
+
   public function validate_fname($p_fname_to_check)
   {
       $validated_fname = $this->sanitise_string($p_fname_to_check);
@@ -46,6 +73,18 @@ class SanitisedValidator {
 
       return $validated_fname;
   }
+
+    /**
+     * This function is used to ensure that a users surname is validated and sanitised before it can be used in the app.
+     * It assigns the validated lname variable to the sanitise_string method, which takes in the lname to check parameter
+     * as input. Once the validated_lname variable has been sanitised it is then passed into an if/else statement to ensure
+     * it isn't too short or too long as well as ensuring it doesn't match certain keywords.
+     *
+     * The fully sanitised and validated lname is then returned.
+     *
+     * @param String $p_lname_to_check
+     * @return String
+     */
 
   public function validate_lname($p_lname_to_check)
   {

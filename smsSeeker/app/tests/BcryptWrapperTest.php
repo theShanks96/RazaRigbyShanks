@@ -12,6 +12,12 @@ require_once '../../coursework/smsSeeker/app/settings.php';
 use PHPUnit\Framework\TestCase;
 
 final class BcryptWrapperTest extends TestCase{
+	/*
+	 * This function is desgined to test the hashing function 
+	 * @var string_to_hash an initial string set to MjyPtqmxgcJWUZpR for testing purposes
+	 * @var string_hashed  is a string that has a create_hashed_password function run on it
+	 * @var expected_hash_length = 60. The hash is expected to be 60 in length and is compared in the Assertequals condition
+	 */
 
     public function testStringHashing(){
         $bcrypt_wrapper = new BcryptWrapper();

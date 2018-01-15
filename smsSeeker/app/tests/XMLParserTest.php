@@ -11,11 +11,17 @@ require_once '../../coursework/smsSeeker/app/src/XMLParser.php';
 require_once '../../coursework/smsSeeker/app/settings.php';
 use PHPUnit\Framework\TestCase;
 
+
 final class XMLParserTest extends TestCase{
 
     public function testClearParserData(){
         $xml_parser = new XmlParser();
-
+		/*
+		 * @var string element_name
+		 * this function sets element_name to 'element'
+		 * tests if parser can clear element_name 
+		 * AssertEquals condition must be empty
+		 */
         $element_name = 'element';
         $xml_parser->set_element_name($element_name);
         $xml_parser->clear_set_data();
@@ -27,6 +33,9 @@ final class XMLParserTest extends TestCase{
 
     /**
      * @depends testClearParserData
+	 * @var xml_string tests the XML parser. A string is predefined and parsed
+	 * @return assertEquals Data that is given in xml_string must match assertEquals condition to pass this test 
+	 *
      */
     public function testXMLParsing(){
         $xml_parser = new XmlParser();

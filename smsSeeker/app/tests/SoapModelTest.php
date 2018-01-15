@@ -14,7 +14,12 @@ require_once '../../coursework/smsSeeker/app/settings.php';
 use PHPUnit\Framework\TestCase;
 
 final class SoapModelTest extends TestCase{
-
+/*
+ * @param testSendMessage() tests if sanitised values and a parser can be set to a soap object
+ * upon submitting, a message appearing with the string 'message_sent' and the send results are displayed
+ *
+ *
+ */
     public function testSendMessage(){
         $validator_obj = new SanitisedValidator();
         $xml_parser = new XmlParser();
@@ -30,6 +35,7 @@ final class SoapModelTest extends TestCase{
 
     /**
      * @depends testSendMessage
+	 
      */
     public function testPeekMessages(){
         $validator_obj = new SanitisedValidator();

@@ -13,6 +13,12 @@ class MySqlQueries {
 
     public static function check_session_var()
     {
+		/*
+		 *	@var m_query_string Concatenation is used to combine several aspects of an SQL statement.
+		 *  
+		 *
+		 */
+		
         $m_query_string  = "SELECT session_var_name ";
         $m_query_string .= "FROM session ";
         $m_query_string .= "WHERE session_id = :local_session_id ";

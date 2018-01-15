@@ -11,11 +11,7 @@ require_once '../../coursework/smsSeeker/app/src/ProfileModel.php';
 use PHPUnit\Framework\TestCase;
 
 final class ProfileModelTest extends TestCase {
-/*
- * @var arr_profile_details contains an array username, password, first name.
- * @return this function that gets a session_id() and retrieves array data to validate a function
- *
- */
+
     public function testDetailRetrieval(){
         $arr_profile_details = array('BillyBob12', 'TalladegaNights23', 'Robert', 'Paulson');
         $profile_obj = new ProfileModel();

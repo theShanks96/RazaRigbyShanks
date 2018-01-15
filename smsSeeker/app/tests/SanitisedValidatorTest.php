@@ -1,6 +1,7 @@
 <?php
 // this is the required path nature for the phpunittests to properly function
  require_once '../../coursework/smsSeeker/app/src/SanitisedValidator.php';
+require_once '../../coursework/smsSeeker/app/settings.php';
  use PHPUnit\Framework\TestCase;
 
  final class SanitisedValidatorTest extends TestCase{
@@ -75,7 +76,7 @@
          $arr_message_correct = array('6986489433', '01/01/2018', 'on', 'off', 'on', 'off', 'forward', '12', '#');
          $message_incorrect = null;
 
-         $this->assertEquals($arr_message_correct, $validator_obj->validate_message($arr_first_message_to_check));
-         $this->assertEquals($message_incorrect, $validator_obj->validate_message($arr_second_message_to_check));
+         $this->assertEquals($arr_message_correct, $validator_obj->validate_message($arr_first_message_to_check, group_denomination, 'PhpUnit'));
+         $this->assertEquals($message_incorrect, $validator_obj->validate_message($arr_second_message_to_check, group_denomination, 'PhpUnit'));
      }
  }

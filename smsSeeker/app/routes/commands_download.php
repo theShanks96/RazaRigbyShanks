@@ -46,7 +46,7 @@ $app->post('/commands/download', function(Request $request, Response $response) 
     //var_dump($this->soap_obj);
 
     foreach($this->arr_tainted_messages as $msg){
-        $validated_msg = $this->validator_obj->validate_message($msg);
+        $validated_msg = $this->validator_obj->validate_message($msg, group_denomination, 'PhpUnit');
         if($validated_msg != null){
             array_push($this->arr_validated_messages, implode(',', $validated_msg));
             //echo '<br>' . end($this->arr_validated_messages);

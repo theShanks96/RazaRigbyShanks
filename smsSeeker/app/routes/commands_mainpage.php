@@ -65,6 +65,9 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
     $this->mysql_obj->set_db_handle($this->db_handle);
     $this->mysql_obj->set_sql_queries($this->mysql_queries);
 
+    $this->mysql_wrapper->set_db_handle($this->db_handle);
+    $this->mysql_wrapper->set_sql_queries($this->mysql_queries);
+
 
     $this->page_text = $this->validator_obj->sanitise_string('The following information is incorrect: ');
 

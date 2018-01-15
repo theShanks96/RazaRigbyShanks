@@ -109,7 +109,7 @@ class SoapModel {
 
         try{
             //$obj_soap_client_handle->__soapCall($soapfunction, [$parameter]);
-            $arr_xml_messages = $obj_soap_client_handle->peekMessages(m2m_username, m2m_password, $p_msisdn);
+            $arr_xml_messages = $obj_soap_client_handle->peekMessages(m2m_username, m2m_password, 1000, $p_msisdn);
             $arr_xml_keys = array_keys($arr_xml_messages);
 
             for($i = 0; $i < count($arr_xml_messages); ++$i){

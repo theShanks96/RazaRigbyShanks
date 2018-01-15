@@ -36,9 +36,9 @@ class SanitisedValidator {
       return $m_sanitised_string;
   }
 
-  public function validate_message($p_message_to_check, $p_string_to_check, $p_string_to_ignore){
+  public function validate_message($p_message_to_check){
       $arr_validated_message = [];
-      if(stristr($p_message_to_check['MESSAGE'], $p_string_to_check) && !stristr($p_message_to_check['MESSAGE'], $p_string_to_ignore)){
+      if(stristr($p_message_to_check['MESSAGE'], group_denomination) && !stristr($p_message_to_check['MESSAGE'], 'PhpUnit')){
           $arr_validated_message = explode(',', $this->sanitise_string($p_message_to_check['MESSAGE']));
           array_shift($arr_validated_message);
           array_unshift($arr_validated_message, $this->sanitise_string($p_message_to_check['DESTINATIONMSISDN']), $this->sanitise_string($p_message_to_check['RECEIVEDTIME']));

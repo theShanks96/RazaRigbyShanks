@@ -114,9 +114,9 @@ $app->post('/commands/change/status', function(Request $request, Response $respo
         $this->validated_new_password_one = $this->validator_obj->validate_password($tainted_password);
     }
 
-    var_dump($this->validated_old_password);
-    var_dump($this->validated_session_password);
-    var_dump($this->openssl_wrapper);
+    //var_dump($this->validated_old_password);
+    //var_dump($this->validated_session_password);
+    //var_dump($this->openssl_wrapper);
 
     /** Not sure how to explain this */
     if($this->bcrypt_wrapper->authenticate_password($this->validated_old_password, $this->validated_session_password))

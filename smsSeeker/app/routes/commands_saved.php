@@ -94,8 +94,8 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
             ]);
     }
 
-    var_dump($this->arr_tainted_alters);
-    var_dump($this->session_obj->perform_detail_retrieval('saved'));
+    //var_dump($this->arr_tainted_alters);
+    //var_dump($this->session_obj->perform_detail_retrieval('saved'));
 
     for( $i = 0; $i < count($this->arr_tainted_alters); ++$i){
         if($this->arr_tainted_alters[$i] <= count($this->arr_tainted_messages) && $this->arr_tainted_alters[$i] >= 0 && $this->arr_tainted_alters[$i] != '')
@@ -127,7 +127,8 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
 
         for($i = 0; $i < count($this->arr_validated_alters); ++$i){
             foreach($this->arr_alters as $alt){
-                if($alt == $this->arr_validated_alters[$i] + 1 && count($this->arr_validated_alters) == 1 ){
+                if($alt == $this->arr_validated_alters[$i] + 1 && (count($this->arr_alters) == 1 || count($this->arr_validated_alters) == 1 )){
+                    unset($this->arr_validated_alters[$i]);
                     $this->arr_validated_alters = [' '];
                     $this->arr_validated_alters = array_filter($this->arr_validated_alters, 'is_int');
                 }
@@ -138,7 +139,7 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
                 }
             }
         }
-        var_dump($this->arr_validated_alters);
+        //var_dump($this->arr_validated_alters);
 
         if(count($this->arr_validated_alters) > 0)
             $this->index_alters = implode(',', $this->arr_validated_alters);

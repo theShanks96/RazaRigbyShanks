@@ -303,6 +303,7 @@ class SessionModel
 
       if($m_saved_messages_result != null){
           $this->c_obj_wrapper_session_file->unset_session('saved_messages');
+          $this->c_session_saved_indicies = $this->c_saved_indicies = null;
       }
   }
 

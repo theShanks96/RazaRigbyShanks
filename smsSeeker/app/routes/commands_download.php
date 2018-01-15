@@ -43,7 +43,7 @@ $app->post('/commands/download', function(Request $request, Response $response) 
     $this->arr_tainted_messages = $this->soap_obj->peek_messages('+447817814149');
     $this->arr_validated_messages = [];
 
-    var_dump($this->soap_obj);
+    //var_dump($this->soap_obj);
 
     foreach($this->arr_tainted_messages as $msg){
         $validated_msg = $this->validator_obj->validate_message($msg);
@@ -53,7 +53,7 @@ $app->post('/commands/download', function(Request $request, Response $response) 
         }
     }
 
-    var_dump($this->arr_validated_messages);
+    //var_dump($this->arr_validated_messages);
 
 
 
@@ -148,6 +148,7 @@ $app->post('/commands/clear', function(Request $request, Response $response) use
     $this->validated_fname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('fname'));
     $this->validated_lname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
     $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
+    //$this->session_obj->set_session_saved_indices(null);
 
     $this->session_obj->store_secure_data();
 

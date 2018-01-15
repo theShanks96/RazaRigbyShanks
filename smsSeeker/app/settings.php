@@ -6,9 +6,8 @@
  * Time: 12:33
  */
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 'On');
-ini_set('xdebug.trace_output_name', 'country_details.%t');
+ini_set('display_errors', 'off');
+ini_set('html_errors', 'off');
 
 define('m2m_username', '17kongbeta');
 define('m2m_password', 'GoofyGoober2048');
@@ -37,10 +36,10 @@ define ('OPENSSL_ID_KEY', 'iGauf6fzfpWNe9ixtfiaK65aNq9riX3K');
 
 $settings = [
   "settings" => [
-    'displayErrorDetails' => true,
+    'displayErrorDetails' => false,
     'addContentLengthHeader' => false,
-    'mode' => 'development',
-    'debug' => true,
+    'mode' => 'release',
+    'debug' => false,
     'class_path' => __DIR__ . '/src/',
     'view' => [
       'template_path' => __DIR__ . '/templates/',

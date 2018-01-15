@@ -84,7 +84,7 @@ $app->get('/', function(Request $request, Response $response)
     $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
 
     //echo $this->validator_obj->sanitise_string('To locate the session file, turn on the echo session_id'); // xampp/tmp/ this is so you can see the session id
-    echo session_id();
+    //echo session_id();
 
     /** If the following variables are not null then login and display the main commands page, else display the login page */
     if($this->validated_username != null && $this->validated_password != null && $this->validated_status)

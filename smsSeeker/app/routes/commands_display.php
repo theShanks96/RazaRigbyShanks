@@ -114,7 +114,7 @@ $app->post('/commands/display', function(Request $request, Response $response) u
     if(isset($this->arr_tainted_params['source']) && isset($this->arr_tainted_params['alters'])
         && stristr($this->arr_tainted_params['source'], 'save')){
         $this->arr_alters = explode(',', $this->validator_obj->sanitise_string($this->arr_tainted_params['alters']));
-        var_dump($this->arr_alters);
+        //var_dump($this->arr_alters);
 
         for($i = 0; $i < count($this->arr_alters); ++$i){
             if($this->arr_alters[$i] == (int)$this->arr_alters[$i] && (int)$this->arr_alters[$i] != 0){

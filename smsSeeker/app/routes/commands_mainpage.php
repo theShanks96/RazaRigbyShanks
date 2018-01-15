@@ -190,7 +190,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'css_path' => CSS_PATH,
                             'landing_page' => LANDING_PAGE,
                             'method' => 'get',
-                            'action' => '../',
+                            'action' => './',
                             'initial_input_box_value' => null,
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,
@@ -229,7 +229,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'css_path' => CSS_PATH,
                             'landing_page' => LANDING_PAGE,
                             'method' => 'get',
-                            'action' => '../',
+                            'action' => './',
                             'initial_input_box_value' => null,
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,
@@ -245,7 +245,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'css_path' => CSS_PATH,
                             'landing_page' => LANDING_PAGE,
                             'method' => 'get',
-                            'action' => '../',
+                            'action' => './',
                             'initial_input_box_value' => null,
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,
@@ -276,7 +276,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'css_path' => CSS_PATH,
                             'landing_page' => LANDING_PAGE,
                             'method' => 'get',
-                            'action' => '../',
+                            'action' => './',
                             'initial_input_box_value' => null,
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,
@@ -303,7 +303,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
 
                         $this->mysql_obj->store_secure_data();
 
-                        var_dump($this->mysql_obj);
+                        //var_dump($this->mysql_obj);
 
                         /** display the main page of the app if everything is in order */
 
@@ -314,14 +314,14 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                                 'landing_page' => LANDING_PAGE,
                                 'method_get' => 'get',
                                 'method_post' => 'post',
-                                'action_saved' => '../commands/saved',
-                                'action_download' => '../commands/download',
-                                'action_clear' => '../commands/clear',
-                                'action_display' => '../commands/display',
-                                'action_filter' => '../commands/filter',
-                                'action_send' => '../commands/send',
-                                'action_change' => '../commands/change',
-                                'action_logout' => '../commands/logout',
+                                'action_saved' => './commands/saved',
+                                'action_download' => './commands/download',
+                                'action_clear' => './commands/clear',
+                                'action_display' => './commands/display',
+                                'action_filter' => './commands/filter',
+                                'action_send' => './commands/send',
+                                'action_change' => './commands/change',
+                                'action_logout' => './commands/logout',
                                 'initial_input_box_value' => null,
                                 'page_title' => APP_NAME,
                                 'page_heading_1' => APP_NAME,
@@ -337,7 +337,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                                 'css_path' => CSS_PATH,
                                 'landing_page' => LANDING_PAGE,
                                 'method' => 'get',
-                                'action' => '../',
+                                'action' => './',
                                 'initial_input_box_value' => null,
                                 'page_title' => APP_NAME,
                                 'page_heading_1' => APP_NAME,

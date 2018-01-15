@@ -123,8 +123,8 @@ $app->get('/', function(Request $request, Response $response)
                 'page_heading_1' => APP_NAME,
                 'page_heading_2' => $this->validator_obj->sanitise_string('Perform many SMS operations and management.'),
                 'page_text' => $this->validator_obj->sanitise_string('It is required that you login or register in order to check or send messages.'),
-                'action_login' => 'index.php/commands',
-                'action_signup' => 'index.php/commands',
+                'action_login' => './commands',
+                'action_signup' => './commands',
                 'initial_input_box_value' => null,
             ]);
     }
@@ -179,7 +179,7 @@ $app->post('/commands/logout', function(Request $request, Response $response) us
                 'css_path' => CSS_PATH,
                 'landing_page' => LANDING_PAGE,
                 'method' => 'get',
-                'action' => '../../',
+                'action' => '../',
                 'initial_input_box_value' => null,
                 'page_title' => APP_NAME,
                 'page_heading_1' => APP_NAME,

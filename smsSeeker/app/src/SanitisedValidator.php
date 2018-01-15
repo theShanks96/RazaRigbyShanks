@@ -102,7 +102,19 @@ class SanitisedValidator {
   public function validate_username($p_username_to_check){
       $validated_username = $this->sanitise_string($p_username_to_check);
 
-      //Todo: check the profile database to check for pre-existing entries
+      if( $validated_username == 'root'){
+          $validated_username = 'root';
+      }
+      elseif(stristr($validated_username, 'username') || stristr($validated_username, 'emanresu') ||
+          stristr($validated_username, '12345') || stristr($validated_username, '54321')){
+          $validated_username = 'Unacceptable Username, Try Something More Unique';
+      }
+      elseif(strlen($validated_username) < 8){
+          $validated_username = 'Unacceptable Username, Minimum should be 8 Characters';
+      }
+      elseif(strlen($validated_username) > 64){
+          $validated_username = 'Unacceptable Username, Maximum is limited to 64 Characters';
+      }
 
       return $validated_username;
   }

@@ -48,6 +48,22 @@ $app->post('/commands/display', function(Request $request, Response $response) u
 
     $this->session_obj->retrieve_secure_data();
 
+    $this->db_handle = $this->get('dbase');
+    $this->mysql_obj = $this->get('mysql_model');
+    $this->mysql_wrapper = $this->get('mysql_wrapper');
+    $this->mysql_queries = $this->get('mysql_queries');
+
+    $this->mysql_wrapper->set_db_handle($this->db_handle);
+    $this->mysql_wrapper->set_sql_queries($this->mysql_queries);
+
+    $this->mysql_obj->set_mysql_wrapper($this->mysql_wrapper);
+    $this->mysql_obj->set_bcrypt_wrapper($this->bcrypt_wrapper);
+    $this->mysql_obj->set_openssl_wrapper($this->openssl_wrapper);
+    $this->mysql_obj->set_base64_wrapper($this->base64_wrapper);
+
+    $this->mysql_obj->set_db_handle($this->db_handle);
+    $this->mysql_obj->set_sql_queries($this->mysql_queries);
+
     $this->arr_tainted_messages = $this->session_obj->perform_detail_retrieval('messages');
     //$this->arr_validated_messages = [];
     $this->arr_validated_keys = [];
@@ -99,7 +115,6 @@ $app->post('/commands/display', function(Request $request, Response $response) u
         && stristr($this->arr_tainted_params['source'], 'save')){
         $this->arr_alters = explode(',', $this->validator_obj->sanitise_string($this->arr_tainted_params['alters']));
         var_dump($this->arr_alters);
-
 
         for($i = 0; $i < count($this->arr_alters); ++$i){
             if($this->arr_alters[$i] == (int)$this->arr_alters[$i] && (int)$this->arr_alters[$i] != 0){

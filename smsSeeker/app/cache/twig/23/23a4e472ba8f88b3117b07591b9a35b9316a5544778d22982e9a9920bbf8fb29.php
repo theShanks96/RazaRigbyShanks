@@ -1,7 +1,7 @@
 <?php
 
 /* compose_layout.html.twig */
-class __TwigTemplate_ed8c5c3f3d9b0f94ab0a31e0b4241d334c62d77ec186ab2c43906a871cd10c2a extends Twig_Template
+class __TwigTemplate_31b0ebd7f53112d14697fc6529d7bad6fd9472d5a90e292bdfdc3b2def93fd69 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -54,7 +54,7 @@ class __TwigTemplate_ed8c5c3f3d9b0f94ab0a31e0b4241d334c62d77ec186ab2c43906a871cd
 
                         <div class=\"field-wrap\">
                             <label>
-                                Current Password<span class=\"req\">*</span>
+                                Password<span class=\"req\">*</span>
                             </label>
                             <input type=\"password\" name=\"password\" required autocomplete=\"off\"/>
                         </div>
@@ -139,7 +139,7 @@ class __TwigTemplate_ed8c5c3f3d9b0f94ab0a31e0b4241d334c62d77ec186ab2c43906a871cd
 
     </div> <!-- /form -->
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src=\"../../js/script.js\"></script>
+    <script src=\"../js/script.js\"></script>
 
     <div class = \"w3c-validate\">
         <a href=\"http://validator.w3.org/check?uri=referer\">Valid HTML 5 Table Page</a>
@@ -166,6 +166,6 @@ class __TwigTemplate_ed8c5c3f3d9b0f94ab0a31e0b4241d334c62d77ec186ab2c43906a871cd
 
     public function getSourceContext()
     {
-        return new Twig_Source("", "compose_layout.html.twig", "D:\\XAMPP\\htdocs\\CTEC3110\\ctec3110-assignment\\smsSeeker\\app\\templates\\compose_layout.html.twig");
+        return new Twig_Source("", "compose_layout.html.twig", "C:\\xampp\\htdocs\\CTEC3110\\coursework\\smsSeeker\\app\\templates\\compose_layout.html.twig");
     }
 }

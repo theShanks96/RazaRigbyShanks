@@ -2,6 +2,9 @@
 {% block content %}
 
 
+    <h1 class="red-colour">{{ message_1 }}</h1>
+
+
     <div class="form"> <!--FORM START-->
         <div class="tab-content"> <!--TAB-CONTENT START-->
 
@@ -11,9 +14,16 @@
                 <form action="{{ action_saved }}" method="{{ method_post }}">
                     <button type="submit" class="mini-button blue-colour button-block">Saved Messages</button>
                 </form>
-                <form action="{{ action_download }}" method="{{ method_post }}">
-                    <button type="submit" class="mini-button green-colour button-block">Download Messages</button>
-                </form>
+                <table class="free">
+                    <tr class="free">
+                        <td><form action="{{ action_download }}" method="{{ method_post }}">
+                            <button type="submit" class="mini-button green-colour button-block">Download Messages</button>
+                        </form></td>
+                        <td><form action="{{ action_clear }}" method="{{ method_post }}">
+                            <button type="submit" class="mini-button red-colour button-block">Clear</button>
+                        </form></td>
+                    </tr>
+                </table>
                 <form action="{{ action_display }}" method="{{ method_post }}">
                     <button type="submit" class="mini-button blue-colour button-block">Display Messages</button>
                 </form>

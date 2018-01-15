@@ -24,7 +24,7 @@ $container['view'] = function ($container) {
 $container['mysql_model'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
     require $class_path . 'MySqlModel.php';
-    $model = new MySqlQueries();
+    $model = new MySqlModel();
     return $model;
 };
 
@@ -38,7 +38,7 @@ $container['mysql_queries'] = function ($container) {
 $container['mysql_wrapper'] = function ($container) {
     $class_path = $container->get('settings')['class_path'];
     require $class_path . 'MySqlWrapper.php';
-    $model = new MySqlQueries();
+    $model = new MySqlWrapper();
     return $model;
 };
 

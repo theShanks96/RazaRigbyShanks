@@ -144,9 +144,7 @@ class SessionModel
 
       if($this->c_arr_messages != [] && $this->c_arr_messages != null ){
           $this->c_arr_session_messages = $this->c_arr_messages;
-          //for($i = 0; $i< count($this->c_arr_messages); ++$i){
-          //    $this->c_arr_session_messages[$i] =  $this->c_obj_openssl_wrapper->encrypt($this->c_arr_messages[$i], $this->c_sid);
-          //}
+
       }
 
       if($this->c_saved_indicies != '' && $this->c_saved_indicies != null){
@@ -175,10 +173,7 @@ class SessionModel
 
       if($this->c_arr_messages != [] || $this->c_arr_messages != null ){
           $this->c_arr_session_messages = $this->c_arr_messages;
-          //for($i = 0; $i< count($this->c_arr_messages); ++$i){
-          //    $this->c_arr_session_messages[$i] =  $this->c_obj_openssl_wrapper->decrypt($this->c_arr_messages[$i], $this->c_sid);
-          //}
-          //$this->c_arr_messages = [];
+
       }
       /** This decodes and decrypts the session file information */
 
@@ -192,6 +187,10 @@ class SessionModel
   public function clear_secure_data(){
       $this->clear_data_in_session_file();
 
+  }
+
+  public function clear_message_data(){
+      $this->clear_messages_in_session_file();
   }
 
   public function perform_detail_retrieval($p_detail){
@@ -237,7 +236,6 @@ class SessionModel
           }
           //$this->c_arr_session_messages = $this->c_arr_messages;
       }
-//      var_dump($m_retrieve_result_saved);
 
       if($m_retrieve_result_saved != '' && $m_retrieve_result_saved != null){
           $this->c_session_saved_indicies = $m_retrieve_result_saved;
@@ -288,6 +286,26 @@ class SessionModel
     return $m_store_result;
   }
 
+  private function clear_messages_in_session_file(){
+
+      $this->c_arr_session_messages = [];
+      $this->c_arr_messages = [];
+
+      $m_messages_total_result = $this->c_obj_wrapper_session_file->get_session('messages');
+      $m_saved_messages_result = $this->c_obj_wrapper_session_file->get_session('saved_messages');
+
+      if($m_messages_total_result != null && $m_messages_total_result > 0){
+          $this->c_obj_wrapper_session_file->unset_session('messages');
+          for($i = 0; $i < $m_messages_total_result; ++$i){
+              $this->c_obj_wrapper_session_file->unset_session('msg_' . $i);
+          }
+      }
+
+      if($m_saved_messages_result != null){
+          $this->c_obj_wrapper_session_file->unset_session('saved_messages');
+      }
+  }
+
   private function clear_data_in_session_file(){
       $m_clear_result = false;
       $m_clear_result_username = $this->c_obj_wrapper_session_file->unset_session($this->c_username_label);
@@ -295,12 +313,27 @@ class SessionModel
       $m_clear_result_fname = $this->c_obj_wrapper_session_file->unset_session($this->c_fname_label);
       $m_clear_result_lname = $this->c_obj_wrapper_session_file->unset_session($this->c_lname_label);
       $m_clear_result_validated = $this->c_obj_wrapper_session_file->unset_session($this->c_validated_label);
+      /*
+            $m_messages_total_result = $this->c_obj_wrapper_session_file->get_session('messages');
+            $m_saved_messages_result = $this->c_obj_wrapper_session_file->get_session('saved_messages');
 
+            if($m_messages_total_result != null && $m_messages_total_result > 0){
+                $this->c_obj_wrapper_session_file->unset_session('messages');
+                for($i = 0; $i < $m_messages_total_result; ++$i){
+                    $this->c_obj_wrapper_session_file->unset_session('msg_' . $i);
+                }
+            }
+
+            if($m_saved_messages_result != null){
+                $this->c_obj_wrapper_session_file->unset_session('saved_messages');
+            }
+      */
       if ($m_clear_result_username !== false && $m_clear_result_password !== false &&
           $m_clear_result_fname !== false && $m_clear_result_lname !== false &&
           $m_clear_result_validated !== false)	{
           $m_clear_result = true;
       }
+
       return $m_clear_result;
   }
 

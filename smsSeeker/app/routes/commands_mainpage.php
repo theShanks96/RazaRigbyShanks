@@ -49,6 +49,23 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
     $this->session_obj->set_sid(session_id());
     $this->session_obj->generate_labels();
 
+    $this->db_handle = $this->get('dbase');
+    $this->mysql_obj = $this->get('mysql_model');
+    $this->mysql_wrapper = $this->get('mysql_wrapper');
+    $this->mysql_queries = $this->get('mysql_queries');
+
+    $this->mysql_wrapper->set_db_handle($this->db_handle);
+    $this->mysql_wrapper->set_sql_queries($this->mysql_queries);
+
+    $this->mysql_obj->set_mysql_wrapper($this->mysql_wrapper);
+    $this->mysql_obj->set_bcrypt_wrapper($this->bcrypt_wrapper);
+    $this->mysql_obj->set_openssl_wrapper($this->openssl_wrapper);
+    $this->mysql_obj->set_base64_wrapper($this->base64_wrapper);
+
+    $this->mysql_obj->set_db_handle($this->db_handle);
+    $this->mysql_obj->set_sql_queries($this->mysql_queries);
+
+
     $this->page_text = $this->validator_obj->sanitise_string('The following information is incorrect: ');
 
     /**
@@ -81,18 +98,13 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                 $this->validated_password = $this->validator_obj->validate_password($tainted_password);
             }
 
-            //  This will be removed, as it is only here until we implement the mysql database
-            //  Todo: remove this backdoor
+            $this->validated_status = false;
 
-            if($this->validated_username == 'root' && $this->validated_password == 'toor')
-            {
-                $this->validated_fname = $this->validator_obj->sanitise_string('Rooty');
-                $this->validated_lname = $this->validator_obj->sanitise_string('Toot');
-                $this->validated_status = true;
-            }
+            $this->username_status = false;
+            $this->password_status = false;
 
-            elseif($this->validated_username == null && $this->validated_password == null)
-            {
+
+            if($this->validated_username == null && $this->validated_password == null) {
                 $this->session_obj->retrieve_secure_data();
 
                 $this->validated_username = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('username'));
@@ -101,18 +113,35 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                 $this->validated_lname = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('lname'));
                 $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
             }
+            else    {
+                $this->mysql_obj->set_database_id($this->validated_username);
+                $this->mysql_obj->retrieve_secure_data();
+
+                if($this->mysql_obj->check_username_database())
+                    $this->username_status = true;
+
+                if( $this->bcrypt_wrapper->authenticate_password($this->validated_password, $this->mysql_obj->perform_detail_retrieval('password'))){
+                    $arr_fullname = explode(',', $this->mysql_obj->perform_detail_retrieval('fullname'));
+                    $this->validated_fname = $arr_fullname[0];
+                    $this->validated_lname = $arr_fullname[1];
+                    $this->password_status = true;
+                }
+
+            }
+
 
                 //  this is the end of what needs to be removed
 
 
                 /** If the user information has been successfully authenticated, then return the main page of the app */
-                if( $this->validated_status){
+                if( $this->username_status && $this->password_status){
 
 
                     $this->profile_obj->set_parameters($this->validated_username, $this->validated_password, $this->validated_fname, $this->validated_lname);
 
-                    $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command.');
+                    $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command: ');
 
+                    //  Saves relevant information locally, to allow user with some functionality
                     $this->session_obj->set_session_profile($this->profile_obj);//
                     $this->session_obj->set_sid($this->validator_obj->sanitise_string(session_id()));
                     $this->session_obj->store_secure_data();
@@ -129,6 +158,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'method_post' => 'post',
                             'action_saved' => './commands/saved',
                             'action_download' => './commands/download',
+                            'action_clear' => './commands/clear',
                             'action_display' => './commands/display',
                             'action_filter' => './commands/filter',
                             'action_send' => './commands/send',
@@ -145,11 +175,11 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                 /** Otherwise, let the user know which part of the information was incorrect, and return to the login_page */
                 else{
 
-                    if( $this->validated_username != "root" ){
+                    if( !$this->username_status){
                         $this->page_text .= 'username ';
                     }
 
-                    if( stristr($this->validated_password, "Unacceptable Password")){
+                    if( !$this->password_status){
                         $this->page_text .= 'password';
                     }
 
@@ -185,14 +215,46 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                     $this->validated_password = $this->validator_obj->validate_password($tainted_password);
 
                     $tainted_fname = $this->arr_tainted_params['fname'];
-                    $this->validated_fname = $this->validator_obj->sanitise_string($tainted_fname);
+                    $this->validated_fname = $this->validator_obj->validate_fname($tainted_fname);
 
                     $tainted_lname = $this->arr_tainted_params['lname'];
-                    $this->validated_lname = $this->validator_obj->sanitise_string($tainted_lname);
+                    $this->validated_lname = $this->validator_obj->validate_lname($tainted_lname);
                 }
 
                 /** If the password returns as unacceptable, let the user know why specifically it is wrong, and return to login_page */
                 if(stristr($this->validated_password, 'Unacceptable Password')){
+                    return $this->view->render($response,
+                        'alert_layout.html.twig',
+                        [
+                            'css_path' => CSS_PATH,
+                            'landing_page' => LANDING_PAGE,
+                            'method' => 'get',
+                            'action' => '../',
+                            'initial_input_box_value' => null,
+                            'page_title' => APP_NAME,
+                            'page_heading_1' => APP_NAME,
+                            'page_heading_2' => $this->validator_obj->sanitise_string('Invalid Information'),
+                            'page_text' => $this->validated_password,
+                        ]);
+                }
+                else if(stristr($this->validated_fname, 'Invalid first name') ||
+                    stristr($this->validated_fname, 'should be between 4 and 20')){
+                    return $this->view->render($response,
+                        'alert_layout.html.twig',
+                        [
+                            'css_path' => CSS_PATH,
+                            'landing_page' => LANDING_PAGE,
+                            'method' => 'get',
+                            'action' => '../',
+                            'initial_input_box_value' => null,
+                            'page_title' => APP_NAME,
+                            'page_heading_1' => APP_NAME,
+                            'page_heading_2' => $this->validator_obj->sanitise_string('Invalid Information'),
+                            'page_text' => $this->validated_fname,
+                        ]);
+                }
+                else if(stristr($this->validated_lname, 'A last name cannot be') ||
+                    stristr($this->validated_lname, 'should be between 4 and 20')){
                     return $this->view->render($response,
                         'alert_layout.html.twig',
                         [
@@ -204,39 +266,85 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                             'page_title' => APP_NAME,
                             'page_heading_1' => APP_NAME,
                             'page_heading_2' => $this->validator_obj->sanitise_string('Invalid Information'),
-                            'page_text' => $this->validated_password,
+                            'page_text' => $this->validated_lname,
+                        ]);
+                }
+                else if(stristr($this->validated_username, 'Unacceptable Username')){
+                    return $this->view->render($response,
+                        'alert_layout.html.twig',
+                        [
+                            'css_path' => CSS_PATH,
+                            'landing_page' => LANDING_PAGE,
+                            'method' => 'get',
+                            'action' => '../',
+                            'initial_input_box_value' => null,
+                            'page_title' => APP_NAME,
+                            'page_heading_1' => APP_NAME,
+                            'page_heading_2' => $this->validator_obj->sanitise_string('Invalid Information'),
+                            'page_text' => $this->validated_username,
                         ]);
                 }
                 else{
 
-                    $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command.');
-                    $this->profile_obj->set_parameters($this->validated_username, $this->validated_password, $this->validated_fname, $this->validated_lname);
+                    $this->mysql_obj->set_database_id($this->validated_username);
 
-                    $this->session_obj->set_session_profile($this->profile_obj);
-                    $this->session_obj->store_secure_data();
+                    if(!$this->mysql_obj->check_username_database()){
 
-                    /** display the main page of the app if everything is in order */
+                        $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command: ');
+                        $this->profile_obj->set_parameters($this->validated_username, $this->validated_password, $this->validated_fname, $this->validated_lname);
 
-                    return $this->view->render($response,
-                        'commands_page.html.twig',
-                        [
-                            'css_path' => CSS_PATH,
-                            'landing_page' => LANDING_PAGE,
-                            'method_get' => 'get',
-                            'method_post' => 'post',
-                            'action_saved' => '../commands/saved',
-                            'action_download' => '../commands/download',
-                            'action_display' => '../commands/display',
-                            'action_filter' => '../commands/filter',
-                            'action_send' => '../commands/send',
-                            'action_change' => '../commands/change',
-                            'action_logout' => '../commands/logout',
-                            'initial_input_box_value' => null,
-                            'page_title' => APP_NAME,
-                            'page_heading_1' => APP_NAME,
-                            'greeting_text' => $this->validator_obj->sanitise_string('Welcome For the First Time ' . $this->validated_fname . ' ' . $this->validated_lname),
-                            'page_text' => $this->page_text,
-                        ]);
+                        $this->session_obj->set_session_profile($this->profile_obj);
+                        $this->session_obj->store_secure_data();
+
+                        $this->mysql_obj->set_database_profile($this->profile_obj);
+
+                        $this->mysql_wrapper->set_db_handle($this->db_handle);
+                        $this->mysql_wrapper->set_sql_queries($this->mysql_queries);
+
+                        $this->mysql_obj->store_secure_data();
+
+                        var_dump($this->mysql_obj);
+
+                        /** display the main page of the app if everything is in order */
+
+                        return $this->view->render($response,
+                            'commands_page.html.twig',
+                            [
+                                'css_path' => CSS_PATH,
+                                'landing_page' => LANDING_PAGE,
+                                'method_get' => 'get',
+                                'method_post' => 'post',
+                                'action_saved' => '../commands/saved',
+                                'action_download' => '../commands/download',
+                                'action_clear' => '../commands/clear',
+                                'action_display' => '../commands/display',
+                                'action_filter' => '../commands/filter',
+                                'action_send' => '../commands/send',
+                                'action_change' => '../commands/change',
+                                'action_logout' => '../commands/logout',
+                                'initial_input_box_value' => null,
+                                'page_title' => APP_NAME,
+                                'page_heading_1' => APP_NAME,
+                                'greeting_text' => $this->validator_obj->sanitise_string('Welcome For the First Time ' . $this->validated_fname . ' ' . $this->validated_lname),
+                                'page_text' => $this->page_text,
+                            ]);
+                    }
+                    else{
+                        $this->page_text = 'Username was already taken, Password was acceptable.';
+                        return $this->view->render($response,
+                            'alert_layout.html.twig',
+                            [
+                                'css_path' => CSS_PATH,
+                                'landing_page' => LANDING_PAGE,
+                                'method' => 'get',
+                                'action' => '../',
+                                'initial_input_box_value' => null,
+                                'page_title' => APP_NAME,
+                                'page_heading_1' => APP_NAME,
+                                'page_heading_2' => $this->validator_obj->sanitise_string('Username Already Taken'),
+                                'page_text' => $this->validator_obj->sanitise_string($this->page_text)
+                            ]);
+                    }
                 }
 
             }
@@ -275,7 +383,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
 
                 $this->profile_obj->set_parameters($this->validated_username, $this->validated_password, $this->validated_fname, $this->validated_lname);
 
-                $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command.');
+                $this->page_text = $this->validator_obj->sanitise_string('Please select the desired command: ');
 
                 $this->session_obj->set_session_profile($this->profile_obj);
                 $this->session_obj->set_sid($this->validator_obj->sanitise_string(session_id()));
@@ -290,6 +398,7 @@ $app->post('/commands', function(Request $request, Response $response) use ($app
                         'method_get' => 'get',
                         'method_post' => 'post',
                         'action_saved' => './commands/saved',
+                        'action_clear' => './commands/clear',
                         'action_download' => './commands/download',
                         'action_display' => './commands/display',
                         'action_filter' => './commands/filter',

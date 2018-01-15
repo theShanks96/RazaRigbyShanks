@@ -50,6 +50,22 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
 
     $this->session_obj->retrieve_secure_data();
 
+    $this->db_handle = $this->get('dbase');
+    $this->mysql_obj = $this->get('mysql_model');
+    $this->mysql_wrapper = $this->get('mysql_wrapper');
+    $this->mysql_queries = $this->get('mysql_queries');
+
+    $this->mysql_wrapper->set_db_handle($this->db_handle);
+    $this->mysql_wrapper->set_sql_queries($this->mysql_queries);
+
+    $this->mysql_obj->set_mysql_wrapper($this->mysql_wrapper);
+    $this->mysql_obj->set_bcrypt_wrapper($this->bcrypt_wrapper);
+    $this->mysql_obj->set_openssl_wrapper($this->openssl_wrapper);
+    $this->mysql_obj->set_base64_wrapper($this->base64_wrapper);
+
+    $this->mysql_obj->set_db_handle($this->db_handle);
+    $this->mysql_obj->set_sql_queries($this->mysql_queries);
+
 
     $this->arr_tainted_messages = $this->session_obj->perform_detail_retrieval('messages');
     $this->arr_validated_messages = [];
@@ -60,12 +76,30 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
     $this->arr_tainted_alters = explode(',', $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('saved')));
     $this->arr_validated_alters = array_fill(0 , count($this->arr_tainted_alters), ' ' );
 
+    //  no saved alterations or saved messages
+    if( $this->arr_tainted_alters[0] == null || $this->arr_tainted_alters[0] == ' '){
+
+        return $this->view->render($response,
+            'alert_layout.html.twig',
+            [
+                'css_path' => CSS_PATH,
+                'landing_page' => LANDING_PAGE,
+                'method' => 'post',
+                'action' => '../commands',
+                'initial_input_box_value' => null,
+                'page_title' => APP_NAME,
+                'page_heading_1' => APP_NAME,
+                'page_heading_2' => $this->validator_obj->sanitise_string('No Saved Messages'),
+                'page_text' => $this->validator_obj->sanitise_string('Download Messages and then Save Some'),
+            ]);
+    }
+
     var_dump($this->arr_tainted_alters);
     var_dump($this->session_obj->perform_detail_retrieval('saved'));
 
     for( $i = 0; $i < count($this->arr_tainted_alters); ++$i){
         if($this->arr_tainted_alters[$i] <= count($this->arr_tainted_messages) && $this->arr_tainted_alters[$i] >= 0 && $this->arr_tainted_alters[$i] != '')
-            $this->arr_validated_alters[$i] = (int)$this->arr_tainted_alters[$i] + 1;
+            $this->arr_validated_alters[$i] = (int)$this->arr_tainted_alters[$i];
     }
 
     $current_page = 0;
@@ -78,7 +112,8 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
     $this->arr_validated_messages = array_fill(0, $messages_count, $this->arr_empty_value);
 
     for($i = 0; $i < ($total_pages * 10); ++$i){
-        if($i < count($this->arr_validated_alters)){
+        if($i < count($this->arr_validated_alters) && $this->arr_validated_alters[$i] != ''
+            && $this->arr_validated_alters[$i] != ' ' && $this->arr_validated_alters[$i] != null ){
             $this->arr_validated_messages[$i] =  explode(',', $this->arr_tainted_messages[$this->arr_validated_alters[$i]]);
         }
         else{   $this->arr_validated_messages[$i] =  $this->arr_empty_value;   }
@@ -89,18 +124,26 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
     if(isset($this->arr_tainted_params['source']) && isset($this->arr_tainted_params['alters'])
         && stristr($this->arr_tainted_params['source'], 'save')){
         $this->arr_alters = explode(',', $this->validator_obj->sanitise_string($this->arr_tainted_params['alters']));
-        var_dump($this->arr_alters);
 
         for($i = 0; $i < count($this->arr_validated_alters); ++$i){
             foreach($this->arr_alters as $alt){
-                if(($alt - 1) == $this->arr_validated_alters[$i]){
-                    $this->arr_validated_alters[$i] = '-1';
-                    //array_splice($this->arr_validated_alters, $i, 1);
+                if($alt == $this->arr_validated_alters[$i] + 1 && count($this->arr_validated_alters) == 1 ){
+                    $this->arr_validated_alters = [' '];
+                    $this->arr_validated_alters = array_filter($this->arr_validated_alters, 'is_int');
+                }
+                else if($alt == $this->arr_validated_alters[$i] + 1){
+                    $this->arr_validated_alters[$i] = ' ';
+                    unset($this->arr_validated_alters[$i]);
+                    $this->arr_validated_alters = array_filter($this->arr_validated_alters, 'is_int');
                 }
             }
         }
+        var_dump($this->arr_validated_alters);
 
-        $this->index_alters = implode(',', $this->arr_validated_alters);
+        if(count($this->arr_validated_alters) > 0)
+            $this->index_alters = implode(',', $this->arr_validated_alters);
+        else
+            $this->index_alters = [' '];
 
         $this->session_obj->set_session_saved_indices($this->index_alters);
         $this->session_obj->store_secure_data();
@@ -151,10 +194,10 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
 
     for($i = 0; $i < 10; ++$i){
         if($this->arr_validated_alters[$i] != ' ' && $this->arr_validated_alters[$i] != -1 && $this->arr_validated_alters[$i] != 0 ) {
-            $arr_message_index[$i] =  $this->arr_validated_alters[$i];
+            $arr_message_index[$i] =  $this->arr_validated_alters[$i] + 1;
         }
     }
-
+/*
     //  if the first message index is '-' then there were no saved messages, tell the user to save some messages
     if( $arr_message_index[0] == '-'){
         return $this->view->render($response,
@@ -171,7 +214,7 @@ $app->post('/commands/saved', function(Request $request, Response $response) use
                 'page_text' => $this->validator_obj->sanitise_string('Download Messages and then Save Some'),
             ]);
     }
-
+*/
 
     return $this->view->render($response,
         'table_layout.html.twig',

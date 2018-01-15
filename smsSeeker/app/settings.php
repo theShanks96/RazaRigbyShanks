@@ -32,6 +32,8 @@ define ('BCRYPT_COST', 12);
 
 define ('OPENSSL_KEY', 'gbmr2sbqvt84ns3ka6nupj4apo');
 define ('OPENSSL_IV', '4929610407272976');
+define ('OPENSSL_DB_KEY', 'WmrNRKFYYPFyNbJE68vyTpSQckQsbL3T');
+define ('OPENSSL_ID_KEY', 'iGauf6fzfpWNe9ixtfiaK65aNq9riX3K');
 
 $settings = [
   "settings" => [
@@ -46,14 +48,13 @@ $settings = [
         'cache' => __DIR__ . '/cache/twig',
         'auto_reload' => true,
       ]],
-  ],
   'pdo' => [
       'rdbms' => 'mysql',
       'host' => 'localhost',
-      'db_name' => 'user_informationDB',
+      'db_name' => 'userbase_smsseeker',
       'port' => '3306',
-      'user_name' => 'user_access',
-      'user_password' => 'DC&Np5fnFj!v!ueo',
+      'user_name' => 'admin_Rj6HHXwh',
+      'user_password' => 'Fs2ck4KGeUCJD5k9',
       'charset' => 'utf8',
       'collation' => 'utf8_unicode_ci',
       'options' => [
@@ -62,7 +63,7 @@ $settings = [
           PDO::ATTR_EMULATE_PREPARES   => true,
       ],
   ]
-
+]
 ];
 
 return $settings;

@@ -84,7 +84,7 @@ $app->get('/', function(Request $request, Response $response)
     $this->validated_status = $this->validator_obj->sanitise_string($this->session_obj->perform_detail_retrieval('validated'));
 
     //echo $this->validator_obj->sanitise_string('To locate the session file, turn on the echo session_id'); // xampp/tmp/ this is so you can see the session id
-    echo session_id();
+    //echo session_id();
 
     /** If the following variables are not null then login and display the main commands page, else display the login page */
     if($this->validated_username != null && $this->validated_password != null && $this->validated_status)
@@ -123,8 +123,8 @@ $app->get('/', function(Request $request, Response $response)
                 'page_heading_1' => APP_NAME,
                 'page_heading_2' => $this->validator_obj->sanitise_string('Perform many SMS operations and management.'),
                 'page_text' => $this->validator_obj->sanitise_string('It is required that you login or register in order to check or send messages.'),
-                'action_login' => 'index.php/commands',
-                'action_signup' => 'index.php/commands',
+                'action_login' => './commands',
+                'action_signup' => './commands',
                 'initial_input_box_value' => null,
             ]);
     }
@@ -179,7 +179,7 @@ $app->post('/commands/logout', function(Request $request, Response $response) us
                 'css_path' => CSS_PATH,
                 'landing_page' => LANDING_PAGE,
                 'method' => 'get',
-                'action' => '../../',
+                'action' => '../',
                 'initial_input_box_value' => null,
                 'page_title' => APP_NAME,
                 'page_heading_1' => APP_NAME,

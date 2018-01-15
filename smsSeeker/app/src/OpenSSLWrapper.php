@@ -23,7 +23,6 @@ class OpenSSLWrapper {
         $this->c_iv = OPENSSL_IV;
         //  for the time being this is sufficiently secure, although not ideal
 
-        //TODO: Implement a more secure method of symmetric encryption that can be decrypted across multiple instances of this wrapper
     }
 
     public function __destruct()    {

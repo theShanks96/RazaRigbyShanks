@@ -6,6 +6,7 @@
  * Time: 12:33
  */
 
+<<<<<<< HEAD
  /**
   * Configuration file for the SMS system. Contains configuration system
   *
@@ -15,6 +16,10 @@
  
 ini_set('display_errors', 'On'); // Configuration setting for displaying errors. Display_errors returns a string on fatal errors.
 ini_set('html_errors', 'On'); // Display HTML errors in a string
+=======
+ini_set('display_errors', 'off');
+ini_set('html_errors', 'off');
+>>>>>>> 8e98e54b2a39c47d2fef038d3d52fd2ea6725685
 
 define('m2m_username', '17kongbeta'); //Constant value related to the username field of the system. Useful for obtaining username information
 define('m2m_password', 'GoofyGoober2048'); // Password field
@@ -44,6 +49,8 @@ define ('BCRYPT_COST', 12);
 // The initialisation vector is used with the key to prevent duplication 
 define ('OPENSSL_KEY', 'gbmr2sbqvt84ns3ka6nupj4apo');
 define ('OPENSSL_IV', '4929610407272976');
+define ('OPENSSL_DB_KEY', 'WmrNRKFYYPFyNbJE68vyTpSQckQsbL3T');
+define ('OPENSSL_ID_KEY', 'iGauf6fzfpWNe9ixtfiaK65aNq9riX3K');
 
 
 /**
@@ -54,10 +61,10 @@ define ('OPENSSL_IV', '4929610407272976');
  */
 $settings = [
   "settings" => [
-    'displayErrorDetails' => true,
+    'displayErrorDetails' => false,
     'addContentLengthHeader' => false,
-    'mode' => 'development',
-    'debug' => true,
+    'mode' => 'release',
+    'debug' => false,
     'class_path' => __DIR__ . '/src/',
     'view' => [
       'template_path' => __DIR__ . '/templates/',
@@ -65,14 +72,13 @@ $settings = [
         'cache' => __DIR__ . '/cache/twig',
         'auto_reload' => true,
       ]],
-  ],
   'pdo' => [
       'rdbms' => 'mysql',
       'host' => 'localhost',
-      'db_name' => 'user_informationDB',
+      'db_name' => 'userbase_smsseeker',
       'port' => '3306',
-      'user_name' => 'user_access',
-      'user_password' => 'DC&Np5fnFj!v!ueo',
+      'user_name' => 'admin_Rj6HHXwh',
+      'user_password' => 'Fs2ck4KGeUCJD5k9',
       'charset' => 'utf8',
       'collation' => 'utf8_unicode_ci',
       'options' => [
@@ -81,7 +87,7 @@ $settings = [
           PDO::ATTR_EMULATE_PREPARES   => true,
       ],
   ]
-
+]
 ];
 
 return $settings;

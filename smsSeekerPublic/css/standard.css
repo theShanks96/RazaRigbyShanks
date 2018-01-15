@@ -118,6 +118,14 @@ table{
   margin-right: auto;
 }
 
+.free{
+  width: 100%;
+  margin: 0em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 fieldset{
     margin-left: auto;
     margin-right: auto;
@@ -255,6 +263,7 @@ textarea {
   text-align: center;
   color: #16a085;
   font-weight: 300;
+  margin-bottom: 1em;
 }
 
 

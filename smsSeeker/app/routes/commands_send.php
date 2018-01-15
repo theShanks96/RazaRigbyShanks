@@ -127,6 +127,8 @@ $app->post('/commands/send/processed', function(Request $request, Response $resp
     if($this->bcrypt_wrapper->authenticate_password($this->validated_password, $this->validated_session_password))
         $this->authenticated_password = true;
 
+    //  This was used during development to populate the m2m server in the case that other students cleared it, it remains commented in case needed.
+/*
     if($this->validated_username == m2m_username && $this->validated_password == m2m_password){
         $this->soap_obj->set_xml_parser($this->xml_parser);
         $this->soap_obj->set_validator($this->validator_obj);
@@ -170,12 +172,13 @@ $app->post('/commands/send/processed', function(Request $request, Response $resp
         $this->page_text = 'You have successfully cluster populated the m2m server.';
         $this->action_back = '../../commands';
     }
+*/
 
     /**
      * If the validated_username is not equal to the validated_session_username and the password is not authenticated
      * then display an error message and return back to the change password form
      */
-    elseif($this->validated_username != $this->validated_session_username && !$this->authenticated_password)
+    if($this->validated_username != $this->validated_session_username && !$this->authenticated_password)
     {
         $this->page_text = 'Both Username and Current Password were Incorrect.';
         $this->action_back = '../../commands/send';

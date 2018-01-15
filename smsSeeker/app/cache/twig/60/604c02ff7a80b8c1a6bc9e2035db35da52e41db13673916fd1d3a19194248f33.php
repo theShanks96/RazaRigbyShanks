@@ -30,36 +30,54 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
         // line 3
         echo "
 
+    <h1 class=\"red-colour\">";
+        // line 5
+        echo twig_escape_filter($this->env, ($context["message_1"] ?? null), "html", null, true);
+        echo "</h1>
+
+
     <div class=\"form\"> <!--FORM START-->
         <div class=\"tab-content\"> <!--TAB-CONTENT START-->
 
             <div id=\"signup\"> <!--SIGNUP START-->
                 <h1>";
-        // line 9
+        // line 12
         echo twig_escape_filter($this->env, ($context["greeting_text"] ?? null), "html", null, true);
         echo "</h1>
                 <p>";
-        // line 10
+        // line 13
         echo twig_escape_filter($this->env, ($context["page_text"] ?? null), "html", null, true);
         echo "</p>
                 <form action=\"";
-        // line 11
+        // line 14
         echo twig_escape_filter($this->env, ($context["action_saved"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
         echo "\">
                     <button type=\"submit\" class=\"mini-button blue-colour button-block\">Saved Messages</button>
                 </form>
-                <form action=\"";
-        // line 14
+                <table class=\"free\">
+                    <tr class=\"free\">
+                        <td><form action=\"";
+        // line 19
         echo twig_escape_filter($this->env, ($context["action_download"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
         echo "\">
-                    <button type=\"submit\" class=\"mini-button green-colour button-block\">Download Messages</button>
-                </form>
+                            <button type=\"submit\" class=\"mini-button green-colour button-block\">Download Messages</button>
+                        </form></td>
+                        <td><form action=\"";
+        // line 22
+        echo twig_escape_filter($this->env, ($context["action_clear"] ?? null), "html", null, true);
+        echo "\" method=\"";
+        echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
+        echo "\">
+                            <button type=\"submit\" class=\"mini-button red-colour button-block\">Clear</button>
+                        </form></td>
+                    </tr>
+                </table>
                 <form action=\"";
-        // line 17
+        // line 27
         echo twig_escape_filter($this->env, ($context["action_display"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -67,7 +85,7 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
                     <button type=\"submit\" class=\"mini-button blue-colour button-block\">Display Messages</button>
                 </form>
                 <form action=\"";
-        // line 20
+        // line 30
         echo twig_escape_filter($this->env, ($context["action_send"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -76,7 +94,7 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
                 </form>
 
                 <form action=\"";
-        // line 24
+        // line 34
         echo twig_escape_filter($this->env, ($context["action_change"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -85,7 +103,7 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
                 </form>
 
                 <form action=\"";
-        // line 28
+        // line 38
         echo twig_escape_filter($this->env, ($context["action_logout"] ?? null), "html", null, true);
         echo "\" method=\"";
         echo twig_escape_filter($this->env, ($context["method_post"] ?? null), "html", null, true);
@@ -103,7 +121,7 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
     </div> <!--FORM END-->
 
     <p>";
-        // line 41
+        // line 51
         echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
         echo "</p>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
@@ -129,7 +147,7 @@ class __TwigTemplate_3702b446c51113be20101f042d0a15cb12aad7ae5d18d90674e3848fb78
 
     public function getDebugInfo()
     {
-        return array (  107 => 41,  89 => 28,  80 => 24,  71 => 20,  63 => 17,  55 => 14,  47 => 11,  43 => 10,  39 => 9,  31 => 3,  28 => 2,  11 => 1,);
+        return array (  125 => 51,  107 => 38,  98 => 34,  89 => 30,  81 => 27,  71 => 22,  63 => 19,  53 => 14,  49 => 13,  45 => 12,  35 => 5,  31 => 3,  28 => 2,  11 => 1,);
     }
 
     public function getSourceContext()

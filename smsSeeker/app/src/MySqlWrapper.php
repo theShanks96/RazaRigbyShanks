@@ -20,6 +20,8 @@ class MySQLWrapper
   private $c_obj_stmt;
   private $c_arr_errors;
 
+  private $c_execution_result;
+
   public function __construct()
   {
     $this->c_obj_db_handle = null;
@@ -40,28 +42,48 @@ class MySQLWrapper
     $this->c_obj_sql_queries = $p_obj_sql_queries;
   }
 
-  public function store_database_var($p_database_key, $p_database_value)
-  {
-
-    if ($this->database_var_exists($p_database_key) === true)
+    public function store_database_var($p_database_id, $p_database_key, $p_database_value)
     {
-      $this->set_database_var($p_database_key, $p_database_value);
-    }
-    else
-    {
-      $this->create_database_var($p_database_key, $p_database_value);
+
+      if ($this->database_var_exists($p_database_id, $p_database_key) === true)
+      {
+        $this->set_database_var($p_database_id, $p_database_key, $p_database_value);
+      }
+      else
+      {
+        $this->create_database_var($p_database_id, $p_database_key, $p_database_value);
+      }
+
+      return($this->c_arr_errors);
     }
 
-    return($this->c_arr_errors);
-  }
+    public function check_database_var($p_database_id, $p_database_key){
+        return $this->database_var_exists($p_database_id, $p_database_key);
+    }
 
-  private function database_var_exists($p_database_key)
+    public function retrieve_database_var($p_database_id, $p_database_key)  {
+
+        if ($this->database_var_exists($p_database_id, $p_database_key) === true)  {
+            //var_dump($this->get_database_var($p_database_id, $p_database_key));
+            return $this->get_database_var($p_database_id, $p_database_key);
+
+        }
+        else
+        {
+            return 'empty';
+        }
+
+
+    }
+
+  private function database_var_exists($p_database_id, $p_database_key)
   {
     $database_var_exists = false;
     $m_query_string = $this->c_obj_sql_queries->check_database_var();
 
     $m_arr_query_parameters = [
-      ':database_var_name' => $p_database_key
+        ':database_id' => $p_database_id,
+        ':database_label' => $p_database_key
     ];
 
     $this->safe_query($m_query_string, $m_arr_query_parameters);
@@ -73,28 +95,42 @@ class MySQLWrapper
     return $database_var_exists;
   }
 
-  private function create_database_var($p_database_key, $p_database_value)
+  private function create_database_var($p_database_id, $p_database_key, $p_database_value)
   {
     $m_query_string = $this->c_obj_sql_queries->create_database_var();
 
     $m_arr_query_parameters = [
-      ':database_var_name' => $p_database_key,
-      ':database_var_value' => $p_database_value
+        ':database_id' => $p_database_id,
+        ':database_label' => $p_database_key,
+        ':database_value' => $p_database_value
     ];
 
     $this->safe_query($m_query_string, $m_arr_query_parameters);
   }
 
-  private function set_database_var($p_database_key, $p_database_value)
+  private function set_database_var($p_database_id, $p_database_key, $p_database_value)
   {
     $m_query_string = $this->c_obj_sql_queries->set_database_var();
 
     $m_arr_query_parameters = [
-      ':database_var_name' => $p_database_key,
-      ':database_var_value' => $p_database_value
+        ':database_id' => $p_database_id,
+        ':database_label' => $p_database_key,
+        ':database_value' => $p_database_value
     ];
 
     $this->safe_query($m_query_string, $m_arr_query_parameters);
+  }
+
+  private function get_database_var($p_database_id, $p_database_key)
+  {
+      $m_query_string = $this->c_obj_sql_queries->get_database_var();
+      $m_arr_query_parameters = [
+          ':database_id' => $p_database_id,
+          ':database_label' => $p_database_key
+      ];
+      $this->safe_query($m_query_string, $m_arr_query_parameters);
+     //echo $this->safe_fetch_array()['database_value'] . '</br>';
+      return $this->safe_fetch_array()['database_value'];
   }
 
   public function safe_query($p_query_string, $p_arr_params = null)
@@ -119,7 +155,7 @@ class MySQLWrapper
         }
       }
       // execute the query
-      $m_execute_result = $this->c_obj_stmt->execute();
+      $this->c_execution_result = $m_execute_result = $this->c_obj_stmt->execute();
       $this->c_arr_errors['execute-OK'] = $m_execute_result;
     }
     catch (PDOException $exception_object)

@@ -108,6 +108,13 @@ class MySQLWrapper
     $this->safe_query($m_query_string, $m_arr_query_parameters);
   }
 
+    /**
+     * This function, through the wrapper, returns the required database variable
+     * Where the id and key are the supplied ones
+     *
+     * @param String $p_database_id, String $p_database_ke
+     * @return String $this->safe_fetch_array()['database_value']
+     */
   private function set_database_var($p_database_id, $p_database_key, $p_database_value)
   {
     $m_query_string = $this->c_obj_sql_queries->set_database_var();
@@ -121,6 +128,13 @@ class MySQLWrapper
     $this->safe_query($m_query_string, $m_arr_query_parameters);
   }
 
+    /**
+     * This function, through the wrapper, returns the required database variable
+     * Where the id and key are the supplied ones
+     *
+     * @param String $p_database_id, String $p_database_key
+     * @return String $this->safe_fetch_array()['database_value']
+     */
   private function get_database_var($p_database_id, $p_database_key)
   {
       $m_query_string = $this->c_obj_sql_queries->get_database_var();

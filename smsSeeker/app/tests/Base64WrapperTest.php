@@ -12,12 +12,6 @@ require_once '../../coursework/smsSeeker/app/settings.php';
 use PHPUnit\Framework\TestCase;
 
 final class Base64WrapperTest extends TestCase{
-/*
- * The purpose of this function nis to test encoding and decoding. 
- * @var string_to_encode the original string that is passed through to be encoded. 
- * @var encoded_string string after encoding. A base of 64 is used
- * @return assertEquals The length is checked of the encoded string 
- */
 
     public function testEncoding(){
         $base64_wrapper = new Base64Wrapper();
@@ -31,12 +25,7 @@ final class Base64WrapperTest extends TestCase{
     }
 
     /**
-     * This function tests for decoding
-	 * @var string_to_encode sets the initial string to encode and decode. 
-	 * @var encoded_string string_to_encode will encode the initial string (string_to_encode)
-	 * @var decoded_string initial string is decoded 
-	 * @return assertEquals strings are compared to see if they match the initial string.
-	 *
+     * @depends testEncoding
      */
     public function testDecoding(){
         $base64_wrapper = new Base64Wrapper();

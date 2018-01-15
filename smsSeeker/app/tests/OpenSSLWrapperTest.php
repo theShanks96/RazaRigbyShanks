@@ -12,13 +12,7 @@ require_once '../../coursework/smsSeeker/app/settings.php';
 use PHPUnit\Framework\TestCase;
 
 final class OpenSSLWrapperTest extends TestCase{
-	/*
-	 *
-	 *
-	 *
-	 *
-	 *
-	 */
+
     public function testEncryption(){
         $openssl_wrapper = new OpenSSLWrapper();
 
@@ -31,7 +25,6 @@ final class OpenSSLWrapperTest extends TestCase{
 
     /**
      * @depends testEncryption
-	 * 
      */
     public function testDecryption(){
         $openssl_wrapper = new OpenSSLWrapper();

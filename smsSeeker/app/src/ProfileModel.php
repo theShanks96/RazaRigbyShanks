@@ -8,7 +8,7 @@
 
 class ProfileModel
 {
-    /** @var Boolean $c_result NOT SURE WHAT THIS DOES  */
+    /** @var Boolean $c_result. Deprecated code  */
     private $c_result;
     /** @var String $c_username The username a user signs up with */
     private $c_username;
@@ -18,9 +18,9 @@ class ProfileModel
     private $c_fname;
     /** @var String $c_lname The surname a user signs up with */
     private $c_lname;
-    /** @var String $c_validated NOT SURE WHAT THIS IS FOR */
+    /** @var String $c_validated. Variable to ensure the session file has not been tampered with */
     private $c_validated;
-    /** @var  WHAT TYPE $c_obj_xml_parser NOTE SURE WHAT THIS IS FOR   */
+    /** @var  WHAT TYPE $c_obj_xml_parser Deprecated   */
     private $c_obj_xml_parser;
 
     public function __construct(){}
@@ -43,7 +43,7 @@ class ProfileModel
         $this->c_fname = $p_fname;
         $this->c_lname = $p_lname;
         $this->c_validated = session_id();
-        //  Todo: a better method of validation, session_id is overlong
+       
     }
 
     /** This function simply initialises the class xml_parser object to the given parameter xml_parser object  */
@@ -58,12 +58,26 @@ class ProfileModel
      * If the passed in parameter is equal to the String 'username' then return the set class username variable, else
      * it it's equal to 'password' then return the set class password, else if it's equal to 'fname' then return the
      * set class first name, else if it's equal to 'lname' then return the set class surname and finally if it's equal
-     * to 'validated' then return NOT SURE WHAT VALIDATED IS FOR.
+     * to 'validated'.
      *
      * @param String $p_detail
      * @return String
      */
 
+	 
+	 
+	 /*
+	  * 
+	  * @param String c_username	  
+	  * @param String c_password
+	  * @param String c_fname
+	  * @param String c_lname
+	  * @param String c_validated
+	  *
+	  */
+	 
+
+	 
     public function perform_detail_retrieval($p_detail){
         if($p_detail == 'username'){
             return $this->c_username;

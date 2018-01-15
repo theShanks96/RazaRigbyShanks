@@ -22,6 +22,11 @@ class SessionWrapper
 	public function __destruct() {
 	}
 
+	/*
+	 * Function to save into a session file using @param session_key and the session_valey_to_set as a parameter (key: username, value: value)
+	 * 
+	 */
+	
 	public static function set_session($p_session_key, $p_session_value_to_set)
 	{
 		$m_session_value_set_successfully = false;
@@ -36,7 +41,9 @@ class SessionWrapper
 		}
 		return $m_session_value_set_successfully;
 	}
-
+	/*
+	 * Get_session is a function to get the session key using @param session_key if the session value is false. Returns a value on completion
+	 */
 	public static function get_session($p_session_key)
 	{
 		$m_session_value = false;
@@ -48,6 +55,10 @@ class SessionWrapper
 		return $m_session_value;
 	}
 
+	/*
+	 * Function to end a session by unsetting already existing keys to a session. Effectively ending the session
+	 */
+	
 	public static function unset_session($p_session_key)
 	{
 		$m_unset_session = false;

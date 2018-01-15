@@ -20,12 +20,18 @@ class SoapModel {
     public function set_parameters($p_command)    {
         $this->c_command = $p_command;
     }
-
+	/*
+	 * XML parser setup
+	 * @Param uses the parser itself as input
+	 */
     public function set_xml_parser($p_obj_xml_parser)
     {
         $this->c_obj_xml_parser = $p_obj_xml_parser;
     }
-
+	/*
+	 * Validator setup
+	 * @Param uses the parser itself as input
+	 */
     public function set_validator($p_obj_validator){
         $this->c_obj_validator = $p_obj_validator;
     }
@@ -52,6 +58,11 @@ class SoapModel {
         $this->c_result = $result;
     }
 */
+	/*
+	 * Creates the soap client. Sets up a connection to the SOAP server using WSDL.
+	 * @Return returns client handle to the soap server allowing data retrieval and sending. Can call server functions
+	 *
+	 */
     private function create_soap_client()
     {
         $obj_soap_client_handle = false;
@@ -72,7 +83,12 @@ class SoapModel {
 
         return $obj_soap_client_handle;
     }
-
+	/* 
+	 * @parameter msdidn serves as the phone number and corresponding message alongside it
+	 * This function allows the sending of messages from the server
+	 * @return if an error has occured, returns a soap_fault error.
+	 *
+	 */
     public function send_message($p_msisdn, $p_message){
 
         $obj_soap_client_handle = null;
@@ -94,7 +110,11 @@ class SoapModel {
             return 'soap_fault';
         }
     }
-
+	/*
+	 *  Accepts the phone number (msidn) as a parameter. Peek_messages makes a request to the SOAP server to send messages
+	 * @Return arr_encoded_messages returns the messages that have been requested in an array of array of strings.
+	 *
+	 */
     public function peek_messages($p_msisdn){
 
         $arr_xml_messages = [];

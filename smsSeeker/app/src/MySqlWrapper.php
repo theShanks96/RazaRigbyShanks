@@ -37,11 +37,21 @@ class MySQLWrapper
     $this->c_obj_db_handle = $p_obj_db_handle;
   }
 
+  
+  /*
+   * @param c_obj_sql_queries SQL Queries are passed through. Queries can be found within MySQLqueries.php
+   */
+  
+
   public function set_sql_queries($p_obj_sql_queries)
   {
     $this->c_obj_sql_queries = $p_obj_sql_queries;
   }
 
+	/*
+	 * @param database_var_exists true would set the database ID, key and value if the database details are correct
+     * otherwise the database is not accesible and returns an error
+     */	 
     public function store_database_var($p_database_id, $p_database_key, $p_database_value)
     {
 
@@ -57,9 +67,20 @@ class MySQLWrapper
       return($this->c_arr_errors);
     }
 
+	/*
+	 * Function to return database variable based on database id and key. Database var is one of three variables needed to create the database
+	 * @return return true if database exists
+	 */
     public function check_database_var($p_database_id, $p_database_key){
         return $this->database_var_exists($p_database_id, $p_database_key);
     }
+	
+	
+	/*
+	 * Function to retrieve database var based on id and key, database var must exist which can be checked using the check_database_var function
+	 * If false, returns the string 'empty'.
+	 *
+	 */
 
     public function retrieve_database_var($p_database_id, $p_database_key)  {
 
@@ -95,6 +116,11 @@ class MySQLWrapper
     return $database_var_exists;
   }
 
+	/*
+	 * @var create_database_var accepts database_id, database_key and value to create the database var.
+	 * @return returns a query object to create the database var. 
+	 *
+	 */
   private function create_database_var($p_database_id, $p_database_key, $p_database_value)
   {
     $m_query_string = $this->c_obj_sql_queries->create_database_var();
@@ -108,13 +134,6 @@ class MySQLWrapper
     $this->safe_query($m_query_string, $m_arr_query_parameters);
   }
 
-    /**
-     * This function, through the wrapper, returns the required database variable
-     * Where the id and key are the supplied ones
-     *
-     * @param String $p_database_id, String $p_database_ke
-     * @return String $this->safe_fetch_array()['database_value']
-     */
   private function set_database_var($p_database_id, $p_database_key, $p_database_value)
   {
     $m_query_string = $this->c_obj_sql_queries->set_database_var();
@@ -128,13 +147,11 @@ class MySQLWrapper
     $this->safe_query($m_query_string, $m_arr_query_parameters);
   }
 
-    /**
-     * This function, through the wrapper, returns the required database variable
-     * Where the id and key are the supplied ones
-     *
-     * @param String $p_database_id, String $p_database_key
-     * @return String $this->safe_fetch_array()['database_value']
-     */
+  /*
+   * This function retrieves the database var accepting the id and key as parameters
+   *  @return safe_fetch_array retrieves database value
+   */
+  
   private function get_database_var($p_database_id, $p_database_key)
   {
       $m_query_string = $this->c_obj_sql_queries->get_database_var();
@@ -184,7 +201,11 @@ class MySQLWrapper
     }
     return $this->c_arr_errors['db_error'];
   }
-
+	/*
+	 * Function to count the rows in a database. Computes the amount of rows in a SQL database and assigns the variable to $m_num_rows;
+	 * @Return m_num_rows integer
+	 *
+	 */
   public function count_rows()
   {
     $m_num_rows = $this->c_obj_stmt->rowCount();

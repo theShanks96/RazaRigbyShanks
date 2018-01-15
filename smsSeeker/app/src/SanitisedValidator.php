@@ -99,6 +99,13 @@ class SanitisedValidator {
       return $validated_lname;
   }
 
+  /*
+   * Function to validate the username. Conditions include the username being over 8 characters and under 64.
+   * @return String validated_username; Upon completion, returns the username assuming it meets the conditions
+   *
+   */
+  
+  
   public function validate_username($p_username_to_check){
       $validated_username = $this->sanitise_string($p_username_to_check);
 
@@ -119,6 +126,12 @@ class SanitisedValidator {
       return $validated_username;
   }
 
+   /*
+    *
+	* Function to validate the passwords. Uses the same conditions as the username validation (i.e password is over 8 characters and under 64)
+	* @return String validated_password; Upon completion, returns the username assuming it meets the conditions
+	*
+	*/
   public function validate_password($p_password_to_check){
       $validated_password = $this->sanitise_string($p_password_to_check);
 

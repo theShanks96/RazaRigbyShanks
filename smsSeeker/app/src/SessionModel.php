@@ -218,7 +218,13 @@ class SessionModel
       }
   }
 
-
+	/*
+	 * Retrieves the string username, password, firstname, lastname from the wrapper
+	 * As well as retrietinvg user details, there is functionality to retrieve the messages that the user has saved and all other messages.
+	 * @String c_username;
+	 * @String c_password; 
+	 * @Return Boolean to determine success of data retrieval
+	 */
   private function retrieve_data_in_session_file(){
       $m_retrieve_result = false;
       $m_retrieve_result_username = $this->c_obj_wrapper_session_file->get_session($this->c_username_label);
@@ -256,6 +262,14 @@ class SessionModel
       return $m_retrieve_result;
   }
 
+  /*
+   * The store function sends data into the wrapper to store for further processing. 
+   * @Param This function accepts m_store_result_username, m_store_result_password, m_store_result_fname, m_store_result_lname, m_store_result_validated which is then passed into the wrapper using the store data method.
+   * @Return Boolean to indicate success or failure of data storage
+   *
+   */
+  
+  
   private function store_data_in_session_file()  {
     $m_store_result = false;
 
@@ -285,7 +299,17 @@ class SessionModel
     }
     return $m_store_result;
   }
-
+  
+  
+  
+  
+	/*
+	 * Function to clear messages in a session file. 
+	 * Retrieves the files using the session file to delete messages
+	 *
+	 */
+  
+  
   private function clear_messages_in_session_file(){
 
       $this->c_arr_session_messages = [];
@@ -307,6 +331,14 @@ class SessionModel
       }
   }
 
+  
+  /*
+   * Similar to the clear messages file but deletes all data besides the session file.
+   * @Param clear_result_username, password, fname, lname are retrieved from the session file wrapper 
+   * @Return boolean to indicate deletion success or failure
+   */
+  
+  
   private function clear_data_in_session_file(){
       $m_clear_result = false;
       $m_clear_result_username = $this->c_obj_wrapper_session_file->unset_session($this->c_username_label);

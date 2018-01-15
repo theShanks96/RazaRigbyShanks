@@ -35,6 +35,11 @@ class XmlParser
       $this->c_arr_parsed_data = [];
   }
 
+  
+  /*
+   * Function to set the string to parse
+   * @Param String to parse is the parameter
+   */
   public function set_xml_string_to_parse($p_xml_string_to_parse)
   {
       $this->clear_set_data();
@@ -48,12 +53,20 @@ class XmlParser
   public function get_element_name(){
       return $this->c_element_name;
   }
+  
+  
+  /*
+   * Retrieves the processed data e.g xml_string_to_parse provided in the set function
+   */
 
   public function get_parsed_data()
   {
     return $this->c_arr_parsed_data;
   }
 
+  /*
+   * Parses the XML and encodes it in a clear-text format that can be safely handled
+   */
   public function parse_the_xml_string()
   {
     $this->c_xml_parser = xml_parser_create();

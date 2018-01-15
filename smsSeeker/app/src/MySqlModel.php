@@ -20,7 +20,7 @@ class MySqlModel
 
     private $c_saved_indicies;
 
-    /** @var Object $c_obj_mysql_wrapper NOT SURE WHAT THIS IS  */
+    /** @var Object $c_obj_mysql_wrapper. Interfaces the MYsql queries*/
     private $c_obj_mysql_wrapper;
     /** @var Object $c_obj_db_handle Holds a reference to the database  */
     private $c_obj_db_handle;
@@ -91,8 +91,8 @@ class MySqlModel
 
 
     /**
-     * NOT SURE WHAT THIS DOES
-     *
+     * Function to set the MySQL wrapper.
+     * 
      * @param Object $p_obj_mysql_wrapper
      */
     public function set_mysql_wrapper($p_obj_mysql_wrapper)
